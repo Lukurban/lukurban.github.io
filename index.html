@@ -119,7 +119,21 @@
 .theme-choice{position:relative;width:27px;height:27px;padding:0;border:1px solid #ffffff30;background:transparent;border-radius:50%}.theme-choice::before{content:'';position:absolute;inset:4px;border-radius:50%;background:var(--swatch)}.theme-choice:hover{border-color:#fff}.theme-choice[aria-pressed="true"]{border-color:#fff;box-shadow:0 0 0 2px #ffffff26}.theme-choice:focus-visible{outline:2px solid #fff;outline-offset:3px}
 .theme-choice[data-color-theme-choice="sunset"]{--swatch:#ed702f}.theme-choice[data-color-theme-choice="amber"]{--swatch:#d99436}
 @media(max-width:1100px){.theme-switcher>span{display:none}}
-@media(max-width:700px){.theme-switcher{position:relative;top:auto;left:auto;right:auto;bottom:auto;width:max-content;margin:8px 20px 8px auto;padding:7px;gap:5px}.theme-choice{width:25px;height:25px}}
+/* Keep service illustrations in the active accent color. The old brightness
+   filter turned the masked artwork black even though its background was orange. */
+.utility-service summary::after{filter:none!important}
+@media(max-width:700px){
+  .theme-switcher{position:relative;top:auto;left:auto;right:auto;bottom:auto;width:max-content;margin:8px 20px 8px auto;padding:7px;gap:5px}
+  .theme-choice{width:25px;height:25px}
+  .utility-hero-grid{display:flex;flex-direction:column;min-height:0;overflow:hidden;background:var(--theme-panel)}
+  .utility-hero-copy{width:100%;min-height:0;padding:34px 18px 30px;border-left:4px solid var(--theme-accent);justify-content:flex-start}
+  .hero-utility h1{font-size:42px;line-height:1.04;letter-spacing:-.03em;margin-bottom:20px}
+  .utility-hero-art{position:relative;inset:auto;width:100%;height:388px;min-height:388px;margin-top:0;background-color:var(--theme-panel);background-size:auto 300px;background-position:86% 0;background-repeat:no-repeat}
+  .utility-hero-art::before{background:linear-gradient(180deg,transparent 55%,var(--theme-panel) 100%);bottom:88px}
+  .utility-art-bottom{left:0;right:0;bottom:0;width:100%;height:88px;min-height:88px;padding:14px 18px;background:var(--theme-panel)!important;backdrop-filter:none}
+  .utility-art-bottom strong{font-size:29px}
+  .utility-art-bottom span{font-size:7px;line-height:1.3}
+}
 @media print{.theme-switcher{display:none}}
 </style></head><body class="utility"><a class="skip-link" href="#inhalt">Zum Inhalt springen</a><div class="theme-switcher" role="group" aria-label="Orangeton wählen"><span>Orangeton</span><button class="theme-choice" type="button" data-color-theme-choice="sunset" aria-label="Sonnenuntergangsorange" title="01 · Sonnenuntergangsorange" aria-pressed="true"></button><button class="theme-choice" type="button" data-color-theme-choice="amber" aria-label="Bernsteinorange" title="02 · Bernsteinorange" aria-pressed="false"></button></div>
     <header class="site-header"><div class="wrap header-inner">
