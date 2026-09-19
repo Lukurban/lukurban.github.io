@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Visitenkarte · L4U Lukas Urbanek</title>
+  <title>Flyer · L4U Lukas Urbanek</title>
   <style>
     :root {
       --bg: #172331;
@@ -11,8 +11,8 @@
       --accent: #ed702f;
       --text: #f5f3ef;
       --muted: #c3ccd5;
-      --card-w: 85mm;
-      --card-h: 55mm;
+      --flyer-w: 105mm;
+      --flyer-h: 148mm;
     }
 
     * { box-sizing: border-box; }
@@ -125,117 +125,243 @@
       align-items: flex-start;
     }
 
-    .card-wrap { width: var(--card-w); }
+    .sheet-wrap { width: var(--flyer-w); }
 
-    .card-caption {
+    .sheet-caption {
       font-size: 10px;
       letter-spacing: .12em;
       text-transform: uppercase;
       margin: 0 0 8px;
     }
 
-    .card {
-      width: var(--card-w);
-      height: var(--card-h);
+    .sheet {
+      width: var(--flyer-w);
+      height: var(--flyer-h);
       background: var(--bg);
       color: var(--accent);
-      border: 0;
       position: relative;
       overflow: hidden;
       -webkit-print-color-adjust: exact;
       print-color-adjust: exact;
     }
 
-    .editor .full { grid-column: 1 / -1; }
-
-    .card-inner {
+    .front-inner {
       height: 100%;
-      padding: 4.2mm 5.4mm 4mm;
       display: flex;
       flex-direction: column;
+    }
+
+    .front-copy {
+      padding: 7mm 7mm 5mm;
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
     }
 
     .kicker {
       display: flex;
       justify-content: space-between;
       gap: 8px;
-      font-size: 6.2pt;
+      font-size: 6pt;
       font-weight: 700;
-      letter-spacing: .14em;
+      letter-spacing: .1em;
       text-transform: uppercase;
-      line-height: 1;
-      color: var(--accent);
+      padding-bottom: 4.2mm;
+      border-bottom: 0.35mm solid var(--accent);
+      white-space: nowrap;
     }
 
     .kicker span:last-child { text-align: right; }
 
-    .brand {
-      margin-top: 2.6mm;
-      display: flex;
-      align-items: flex-start;
-      gap: 3mm;
-    }
-
     .wordmark {
-      font-size: 20pt;
+      margin-top: 5mm;
+      font-size: 34pt;
       font-weight: 900;
-      letter-spacing: -1.6px;
-      line-height: .84;
+      letter-spacing: -2.4px;
+      line-height: .82;
       position: relative;
-      padding-right: 3.4mm;
-      color: var(--accent);
+      display: inline-block;
+      width: max-content;
+      align-self: flex-start;
+      padding-right: 4.2mm;
     }
 
     .wordmark::after {
       content: "";
       position: absolute;
       right: 0;
-      top: 1.2mm;
-      width: 1.8mm;
-      height: 1.8mm;
+      top: 2mm;
+      width: 2.4mm;
+      height: 2.4mm;
       background: var(--accent);
     }
 
-    .brand-meta { padding-top: 1mm; }
-
-    .brand-meta strong {
-      display: block;
+    .owner {
+      margin-top: 2.2mm;
       font-size: 8pt;
-      letter-spacing: .14em;
+      letter-spacing: .16em;
       font-weight: 700;
-      line-height: 1.15;
       color: var(--text);
     }
 
-    .brand-meta small {
-      display: block;
-      margin-top: 1.1mm;
-      font-size: 6pt;
-      letter-spacing: .1em;
+    .headline {
+      margin: 6mm 0 0;
+      font-size: 16pt;
+      font-weight: 900;
+      letter-spacing: -.04em;
+      line-height: 1.02;
       text-transform: uppercase;
-      color: var(--accent);
     }
 
-    .rule {
-      height: 0.3mm;
-      background: var(--accent);
-      margin: 2.4mm 0 2mm;
-      flex: 0 0 auto;
+    .headline span { display: block; }
+
+    .lead-copy {
+      margin: 3.4mm 0 0;
+      font-size: 8pt;
+      line-height: 1.4;
+      color: var(--text);
+      max-width: 78mm;
     }
 
-    .services {
-      font-size: 5.8pt;
-      font-weight: 700;
+    .service-list {
+      list-style: none;
+      margin: auto 0 0;
+      padding: 4mm 0 0;
+      border-top: 0.35mm solid var(--accent);
+    }
+
+    .service-list li {
+      display: grid;
+      grid-template-columns: 12mm 1fr;
+      gap: 2mm;
+      padding: 2.1mm 0;
+      font-size: 9pt;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .service-list small {
+      display: block;
+      margin-top: 0.6mm;
+      font-size: 6.6pt;
+      font-weight: 500;
+      letter-spacing: .02em;
+      text-transform: none;
+      color: var(--text);
+    }
+
+    .photo {
+      height: 38mm;
+      position: relative;
+      background: var(--panel) url("l4u-van-residential-hero-v2.png") center 42% / cover no-repeat;
+    }
+
+    .photo::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, var(--bg) 0%, transparent 38%);
+    }
+
+    .photo-bar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 2.6mm 7mm;
+      background: #ed702fe8;
+      color: #fff;
+      font-size: 7pt;
+      font-weight: 800;
       letter-spacing: .12em;
       text-transform: uppercase;
-      margin-bottom: 1.6mm;
-      color: var(--accent);
+    }
+
+    .back-inner {
+      height: 100%;
+      padding: 7mm;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .back-mark {
+      font-size: 22pt;
+      font-weight: 900;
+      letter-spacing: -1.8px;
+      line-height: .82;
+    }
+
+    .back-kicker {
+      margin-top: 1.6mm;
+      font-size: 6.4pt;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+
+    .back-title {
+      margin: 7mm 0 0;
+      font-size: 14pt;
+      font-weight: 900;
+      letter-spacing: -.04em;
+      line-height: 1.05;
+      text-transform: uppercase;
+    }
+
+    .back-text {
+      margin: 3mm 0 0;
+      font-size: 8pt;
+      line-height: 1.45;
+      color: var(--text);
+    }
+
+    .facts {
+      margin-top: 6mm;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3mm;
+    }
+
+    .facts div {
+      border-top: 0.35mm solid var(--accent);
+      padding-top: 2.4mm;
+    }
+
+    .facts strong {
+      display: block;
+      font-size: 13pt;
+      font-weight: 900;
+      letter-spacing: -.04em;
+      line-height: 1;
+    }
+
+    .facts span {
+      display: block;
+      margin-top: 1.4mm;
+      font-size: 6.2pt;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .cta {
+      margin-top: auto;
+      padding-top: 5mm;
+      border-top: 0.35mm solid var(--accent);
+    }
+
+    .cta p {
+      margin: 0 0 3.2mm;
+      font-size: 8pt;
+      color: var(--text);
+      line-height: 1.4;
     }
 
     .contacts {
       display: grid;
-      gap: 0.7mm;
-      margin-top: auto;
+      gap: 1.4mm;
     }
 
     .contacts div {
@@ -246,78 +372,17 @@
     }
 
     .contacts dt {
-      font-size: 6pt;
+      font-size: 6.4pt;
       font-weight: 700;
       letter-spacing: .14em;
       text-transform: uppercase;
-      color: var(--accent);
     }
 
     .contacts dd {
       margin: 0;
-      font-size: 7pt;
-      font-weight: 500;
+      font-size: 8.2pt;
+      font-weight: 600;
       color: var(--text);
-      overflow: hidden;
-      white-space: nowrap;
-    }
-
-    .contacts dd.wrap {
-      white-space: normal;
-      line-height: 1.2;
-    }
-
-    .back .card-inner { justify-content: space-between; }
-
-    .back-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-    }
-
-    .back-mark {
-      font-size: 22pt;
-      font-weight: 900;
-      letter-spacing: -1.8px;
-      line-height: .82;
-      color: var(--accent);
-    }
-
-    .back-region {
-      font-size: 6.2pt;
-      font-weight: 700;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      text-align: right;
-      max-width: 32mm;
-      color: var(--accent);
-    }
-
-    .back-copy h2 {
-      margin: 0 0 1.6mm;
-      font-size: 11pt;
-      letter-spacing: -.03em;
-      line-height: 1.05;
-      color: var(--accent);
-    }
-
-    .back-copy p {
-      margin: 0;
-      font-size: 7.2pt;
-      line-height: 1.35;
-      max-width: 62mm;
-      color: var(--text);
-    }
-
-    .back-foot {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      font-size: 6.2pt;
-      font-weight: 700;
-      letter-spacing: .12em;
-      text-transform: uppercase;
-      color: var(--accent);
     }
 
     @media (max-width: 720px) {
@@ -334,30 +399,28 @@
       .studio-chrome { display: none !important; }
       .studio { width: auto; margin: 0; padding: 0; }
       .stage { display: block; gap: 0; }
-      .card-wrap {
-        width: 85mm;
-        height: 55mm;
+      .sheet-wrap {
+        width: 105mm;
+        height: 148mm;
         overflow: hidden;
         break-inside: avoid;
         page-break-inside: avoid;
         break-after: page;
         page-break-after: always;
       }
-      .card-wrap:last-child {
+      .sheet-wrap:last-child {
         break-after: auto;
         page-break-after: auto;
       }
-      .card-caption { display: none; }
-      .card {
-        width: 85mm;
-        height: 55mm;
-        max-height: 55mm;
+      .sheet-caption { display: none; }
+      .sheet {
+        width: 105mm;
+        height: 148mm;
+        max-height: 148mm;
         overflow: hidden;
-        break-inside: avoid;
-        page-break-inside: avoid;
       }
       @page {
-        size: 85mm 55mm;
+        size: 105mm 148mm;
         margin: 0;
       }
     }
@@ -366,12 +429,11 @@
 <body>
   <div class="studio">
     <div class="studio-chrome">
-      <h1>Visitenkarte L4U</h1>
+      <h1>Flyer L4U · Briefkasten</h1>
       <p class="lead">
-        Цвета как на сайте: фон машины <strong>#172331</strong>, буквы
-        Sonnenuntergangsorange <strong>#ed702f</strong>.
-        Печать: Ctrl+P, 85×55&nbsp;mm.
-        <a href="flyer.html">Zum Flyer →</a>
+        DIN&nbsp;A6 (105×148&nbsp;mm), две стороны. Формат как раз для почтовых ящиков.
+        Фон и оранжевый как на сайте и у машины. Печать: Ctrl+P, двусторонняя.
+        <a href="visitenkarte.html">Zur Visitenkarte →</a>
       </p>
       <form class="editor" id="editor" autocomplete="off">
         <label>Name
@@ -392,73 +454,91 @@
         <label>Region
           <input id="region" name="region" value="Cottbus + Umgebung">
         </label>
-        <label class="full">Adresse
-          <input id="address" name="address" value="Teichstraße 152C, 03149 Forst (Lausitz)">
-        </label>
         <div class="actions">
           <button type="button" id="print">Drucken / PDF</button>
           <button type="button" class="ghost" id="reset">Felder zurücksetzen</button>
-          <a class="btn ghost" href="flyer.html">Flyer öffnen</a>
+          <a class="btn ghost" href="visitenkarte.html">Visitenkarte öffnen</a>
         </div>
       </form>
     </div>
 
-    <p class="preview-label studio-chrome">Vorschau · DIN-Visitenkarte 85 × 55 mm</p>
+    <p class="preview-label studio-chrome">Vorschau · DIN A6 105 × 148 mm</p>
     <div class="stage">
-      <div class="card-wrap">
-        <p class="card-caption studio-chrome">Vorderseite</p>
-        <article class="card front" aria-label="Visitenkarte Vorderseite">
-          <div class="card-inner">
-            <div class="kicker">
-              <span>Transport &amp; Garten</span>
-              <span data-bind="region">Cottbus + Umgebung</span>
-            </div>
-            <div class="brand">
+      <div class="sheet-wrap">
+        <p class="sheet-caption studio-chrome">Vorderseite</p>
+        <article class="sheet front" aria-label="Flyer Vorderseite">
+          <div class="front-inner">
+            <div class="front-copy">
+              <div class="kicker">
+                <span>Transport &amp; Garten</span>
+                <span data-bind="region">Cottbus + Umgebung</span>
+              </div>
               <div class="wordmark" data-bind="brand">L4U</div>
-              <div class="brand-meta">
-                <strong data-bind="name-upper">LUKAS URBANEK</strong>
-                <small>Ein Ansprechpartner</small>
-              </div>
+              <div class="owner" data-bind="name-upper">LUKAS URBANEK</div>
+              <h1 class="headline">
+                <span>Sie haben</span>
+                <span>was vor.</span>
+                <span>Ich pack’s an.</span>
+              </h1>
+              <p class="lead-copy">Ihr direkter Ansprechpartner in der Nachbarschaft. Privat und Gewerbe.</p>
+              <ul class="service-list">
+                <li>
+                  <span>01</span>
+                  <div>Entrümpelung<small>Wohnung, Keller, Sperrmüll</small></div>
+                </li>
+                <li>
+                  <span>02</span>
+                  <div>Transport<small>Warentransporte bis 3,5 t</small></div>
+                </li>
+                <li>
+                  <span>03</span>
+                  <div>Gartenpflege<small>Rasen, Hecken, Grünflächen</small></div>
+                </li>
+              </ul>
             </div>
-            <div class="rule"></div>
-            <div class="services">Entrümpelung · Transport · Gartenpflege</div>
-            <dl class="contacts">
-              <div>
-                <dt>Tel</dt>
-                <dd data-bind="phone">+49 15566 960566</dd>
-              </div>
-              <div>
-                <dt>Mail</dt>
-                <dd data-bind="email">lukas.urbanek@transportundgarten.de</dd>
-              </div>
-              <div>
-                <dt>Web</dt>
-                <dd data-bind="website">transportundgarten.de</dd>
-              </div>
-              <div>
-                <dt>Adr</dt>
-                <dd class="wrap" data-bind="address">Teichstraße 152C, 03149 Forst (Lausitz)</dd>
-              </div>
-            </dl>
+            <div class="photo" role="img" aria-label="Transporter von L4U">
+              <div class="photo-bar">Rund um Cottbus · bis 100 km</div>
+            </div>
           </div>
         </article>
       </div>
 
-      <div class="card-wrap">
-        <p class="card-caption studio-chrome">Rückseite</p>
-        <article class="card back" aria-label="Visitenkarte Rückseite">
-          <div class="card-inner">
-            <div class="back-top">
+      <div class="sheet-wrap">
+        <p class="sheet-caption studio-chrome">Rückseite</p>
+        <article class="sheet back" aria-label="Flyer Rückseite">
+          <div class="back-inner">
+            <div>
               <div class="back-mark" data-bind="brand">L4U</div>
-              <div class="back-region" data-bind="region">Cottbus + Umgebung</div>
+              <div class="back-kicker">Ein Ansprechpartner · Lausitz</div>
             </div>
-            <div class="back-copy">
-              <h2>Sie haben was vor.<br>Ich pack’s an.</h2>
-              <p>Platz schaffen. Waren bewegen. Grün pflegen. Rund um Cottbus, bei größeren Aufträgen auch Berlin und Dresden.</p>
+            <h2 class="back-title">Platz schaffen.<br>Waren bewegen.<br>Grün pflegen.</h2>
+            <p class="back-text">Wohnungsauflösung, Transport oder Garten — einzeln oder als Paket. Ich bin flexibel, packe an und suche eine praktische Lösung.</p>
+            <div class="facts">
+              <div>
+                <strong>100 km</strong>
+                <span>Rund um Cottbus</span>
+              </div>
+              <div>
+                <strong>3,5 t</strong>
+                <span>Warentransporte</span>
+              </div>
             </div>
-            <div class="back-foot">
-              <span data-bind="name-upper">LUKAS URBANEK</span>
-              <span>Lausitz</span>
+            <div class="cta">
+              <p>Auftrag? Einfach anrufen oder schreiben.</p>
+              <dl class="contacts">
+                <div>
+                  <dt>Tel</dt>
+                  <dd data-bind="phone">+49 15566 960566</dd>
+                </div>
+                <div>
+                  <dt>Mail</dt>
+                  <dd data-bind="email">lukas.urbanek@transportundgarten.de</dd>
+                </div>
+                <div>
+                  <dt>Web</dt>
+                  <dd data-bind="website">transportundgarten.de</dd>
+                </div>
+              </dl>
             </div>
           </div>
         </article>
@@ -473,21 +553,20 @@
       phone: "+49 15566 960566",
       email: "lukas.urbanek@transportundgarten.de",
       website: "https://transportundgarten.de/",
-      region: "Cottbus + Umgebung",
-      address: "Teichstraße 152C, 03149 Forst (Lausitz)"
+      region: "Cottbus + Umgebung"
     };
-    const fields = ["name", "brand", "phone", "email", "website", "region", "address"];
+    const fields = ["name", "brand", "phone", "email", "website", "region"];
     const placeholders = { phone: "+49 …", email: "mail@…" };
 
     function load() {
       try {
-        return { ...defaults, ...JSON.parse(localStorage.getItem("l4u-card-v4") || "{}") };
+        return { ...defaults, ...JSON.parse(localStorage.getItem("l4u-card-v3") || "{}") };
       } catch {
         return { ...defaults };
       }
     }
     function save(data) {
-      localStorage.setItem("l4u-card-v4", JSON.stringify(data));
+      localStorage.setItem("l4u-card-v3", JSON.stringify(data));
     }
     function stripSite(value) {
       return String(value || "").replace(/^https?:\/\//i, "").replace(/\/$/, "");
@@ -526,7 +605,7 @@
     });
     document.getElementById("print").addEventListener("click", () => window.print());
     document.getElementById("reset").addEventListener("click", () => {
-      localStorage.removeItem("l4u-card-v4");
+      localStorage.removeItem("l4u-card-v3");
       fillForm(defaults);
       render(defaults);
     });

@@ -17,3 +17,7 @@ exclude:
   - visitenkarte.pdf
   - visitenkarte-front.png
   - visitenkarte-back.png
+  - flyer.html
+  - flyer.pdf
+  - flyer-front.png
+  - flyer-back.png
