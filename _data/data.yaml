@@ -168,8 +168,16 @@ contact:
     - AUFTRAG?
     - FANGEN
     - WIR AN.
-  text: Was muss weg, wohin oder gepflegt werden? Bereiten Sie hier Ihre Anfrage vor und nehmen Sie über MyHammer Kontakt auf.
+  text: Was muss weg, wohin oder gepflegt werden? Rufen Sie an, schreiben Sie eine E-Mail oder bereiten Sie hier Ihre Anfrage vor.
   person_role: TRANSPORT & GARTEN
+  phone: "+49 15566 960566"
+  phone_href: "tel:+4915566960566"
+  phone_label: Tel
+  email: lukas.urbanek@transportundgarten.de
+  email_label: Mail
+  website: https://transportundgarten.de/
+  website_label: transportundgarten.de
+  website_short_label: Web
   myhammer_label: DIREKT ZU MYHAMMER
   myhammer_request: https://www.my-hammer.de/send-request-to/l4u-lukas-urbanek-transport-und-garten
   myhammer_profile: https://www.my-hammer.de/auftragnehmer/l4u-lukas-urbanek-transport-und-garten
@@ -220,11 +228,14 @@ form:
 legal:
   close: Dialog schließen
   impressum:
-    eyebrow: NOCH NICHT VERÖFFENTLICHT
+    eyebrow: KONTAKT
     title: Impressum · Entwurf
     paragraphs:
-      - Dieses Dokument ist eine lokale Designvorschau für L4U – Lukas Urbanek – Transport und Garten, kein veröffentlichter Unternehmensauftritt.
-      - Vor einer Veröffentlichung müssen die vollständigen Anbieter- und Kontaktangaben vom Inhaber ergänzt und geprüft werden. In diesem Entwurf wurden keine Anschrift, Telefonnummer oder E-Mail-Adresse erfunden.
+      - L4U – Lukas Urbanek – Transport und Garten.
+      - "Telefon: +49 15566 960566"
+      - "E-Mail: lukas.urbanek@transportundgarten.de"
+      - "Website: https://transportundgarten.de/"
+      - Eine Anschrift ist hier noch nicht hinterlegt. Vor einer Veröffentlichung müssen die vollständigen Anbieterangaben vom Inhaber ergänzt und geprüft werden.
   datenschutz:
     eyebrow: HINWEIS ZUR VORSCHAU
     title: Datenschutz · Entwurf

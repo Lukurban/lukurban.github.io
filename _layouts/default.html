@@ -169,6 +169,26 @@
               <small>{{ d.contact.person_role }}</small>
             </div>
           </div>
+          <ul class="contact-direct">
+            <li>
+              <a href="{{ d.contact.phone_href }}">
+                <span>{{ d.contact.phone_label }}</span>
+                {{ d.contact.phone }}
+              </a>
+            </li>
+            <li>
+              <a href="mailto:{{ d.contact.email }}">
+                <span>{{ d.contact.email_label }}</span>
+                {{ d.contact.email }}
+              </a>
+            </li>
+            <li>
+              <a href="{{ d.contact.website }}">
+                <span>{{ d.contact.website_short_label }}</span>
+                {{ d.contact.website_label }}
+              </a>
+            </li>
+          </ul>
           <a class="text-link contact-external" href="{{ d.contact.myhammer_request }}" target="_blank" rel="noopener noreferrer">{{ d.contact.myhammer_label }} {% include icon.html name="arrow-ne" %}</a>
         </div>
         <div>
@@ -223,6 +243,11 @@
           <button type="button" data-dialog="impressum">{{ d.footer.impressum_label }}</button>
           <button type="button" data-dialog="datenschutz">{{ d.footer.datenschutz_label }}</button>
         </div>
+      </div>
+      <div class="footer-contacts">
+        <a href="{{ d.contact.phone_href }}">{{ d.contact.phone }}</a>
+        <a href="mailto:{{ d.contact.email }}">{{ d.contact.email }}</a>
+        <a href="{{ d.contact.website }}">{{ d.contact.website_label }}</a>
       </div>
       <div class="footer-bottom">
         <span>{{ d.footer.note }}</span>
