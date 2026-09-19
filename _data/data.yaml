@@ -1,0 +1,244 @@
+# Site content. Change this file and rebuild — layout stays in _layouts/.
+# Theme accent is the first Orangeton picker color (Sonnenuntergangsorange).
+
+theme:
+  accent: "#ed702f"
+  accent_hover: "#fa874b"
+  bg: "#172331"
+  panel: "#101a27"
+  deep: "#09111b"
+  text: "#f5f3ef"
+  muted: "#c3ccd5"
+
+meta:
+  lang: de
+  title: L4U · Lukas Urbanek
+  description: Entrümpelung, Transport und Gartenpflege in der Region Cottbus.
+  robots: noindex,nofollow
+
+brand:
+  name: L4U
+  owner: Lukas Urbanek
+  tagline: TRANSPORT & GARTEN
+  region: LAUSITZ
+  initials: LU
+  logo_aria: L4U – Lukas Urbanek, Startseite
+
+nav:
+  - href: "#leistungen"
+    label: Leistungen
+  - href: "#ueber"
+    label: Über mich
+  - href: "#gebiet"
+    label: Einsatzgebiet
+
+mobile_nav:
+  - href: "#leistungen"
+    label: Leistungen
+  - href: "#ueber"
+    label: Über mich
+  - href: "#gebiet"
+    label: Einsatzgebiet
+  - href: "#fragen"
+    label: Häufige Fragen
+  - href: "#kontakt"
+    label: Anfrage vorbereiten
+
+header:
+  cta: JETZT ANFRAGEN
+  menu_open: Menü öffnen
+  menu_close: Menü schließen
+  skip_link: Zum Inhalt springen
+  nav_aria: Hauptnavigation
+  mobile_nav_aria: Mobile Navigation
+
+hero:
+  kicker_left: TRANSPORT / ENTRÜMPELUNG / GARTEN
+  kicker_right: COTTBUS + UMGEBUNG
+  title:
+    - SIE HABEN
+    - WAS VOR.
+  title_accent: ICH PACK’S AN.
+  text: |-
+    Platz schaffen. Waren bewegen. Grün pflegen.
+    L4U ist Ihr direkter Ansprechpartner, wenn aus einer Aufgabe ein erledigter Auftrag werden soll.
+  cta: LOS GEHT’S
+  image: /l4u-van-residential-hero-v2.png
+  stats:
+    - value: 100 km
+      label: RUND UM COTTBUS
+    - value: 3,5 t
+      label: WARENTRANSPORTE LAUT PROFIL
+
+ribbon:
+  - ENTRÜMPELUNG
+  - TRANSPORT
+  - GARTENPFLEGE
+  - EIN ANSPRECHPARTNER.
+
+services:
+  id: leistungen
+  eyebrow: 01 / LEISTUNGEN
+  title:
+    - WAS ANSTEHT.
+    - WIRD ANGEPACKT.
+  intro: Drei Leistungsbereiche. Für private Haushalte und Gewerbe. Einzeln oder als passende Paketlösung.
+  request_label: Diese Leistung anfragen
+  items:
+    - number: "01 /"
+      title: ENTRÜMPELUNG
+      text: Wohnungsauflösungen, Keller, Dachböden und Garagen. Dazu Büro- und Gewerbeauflösungen, stark zugestellte Wohnungen und Sperrmüllentsorgung.
+      request: Entrümpelung & Auflösung
+      icon: /service-clearance-line.png
+      tags:
+        - PRIVAT & GEWERBE
+        - SPERRMÜLL
+      open: false
+    - number: "02 /"
+      title: TRANSPORT
+      text: Warentransporte bis 3,5 Tonnen laut Unternehmensprofil. Beschreiben Sie, was wohin gebracht werden soll, damit wir die Details abstimmen können.
+      request: Transport
+      icon: /service-transport-line.png
+      tags:
+        - WARENTRANSPORTE
+        - INDIVIDUELLE ROUTEN
+      open: true
+    - number: "03 /"
+      title: GARTENPFLEGE
+      text: Grün- und Gartenpflege rund um Ihr Grundstück. Rasen, Hecken und Grünflächen – passend zu den anstehenden Aufgaben.
+      request: Gartenpflege
+      icon: /service-garden-line.png
+      tags:
+        - GRÜN- & GARTENPFLEGE
+        - AUCH KOMBINIERBAR
+      open: false
+
+area:
+  id: gebiet
+  eyebrow: 02 / EINSATZGEBIET
+  title:
+    - HIER ZU HAUSE.
+  title_accent: |-
+    FÜR SIE
+    UNTERWEGS.
+  text: Bis zu 100 Kilometer rund um Cottbus. Größere Projekte? Nach Absprache auch Berlin und Dresden.
+  map_aria: "Schematische Darstellung: Cottbus und Umgebung, Berlin und Dresden bei größeren Aufträgen. Nicht maßstabsgetreu."
+  map_caption: SCHEMATISCH · NICHT MASSSTABSGETREU
+  regions:
+    - id: local
+      label: Cottbus & Umgebung
+      answer: Rund um Cottbus · Fahrten bis zu 100 Kilometer.
+      default: true
+    - id: berlin
+      label: Berlin
+      answer: Berlin · für größere Aufträge nach Absprache.
+      default: false
+    - id: dresden
+      label: Dresden
+      answer: Dresden · für größere Aufträge nach Absprache.
+      default: false
+
+about:
+  id: ueber
+  mark_left: TRANSPORT & GARTEN
+  mark_right: LAUSITZ
+  eyebrow: 03 / DER MENSCH DAHINTER
+  title:
+    - KEIN UMWEG.
+    - EIN ANSPRECHPARTNER.
+  text: Ich bin Lukas Urbanek. Ich bin flexibel, packe gern an und stehe für einen ehrlichen Umgang. Für Ihr Vorhaben suche ich eine praktische Lösung – und bei Bedarf kombiniere ich mehrere Leistungen miteinander.
+  sign: LUKAS URBANEK / L4U
+
+faq:
+  id: fragen
+  eyebrow: HÄUFIGE FRAGEN
+  title: KLARE ANTWORTEN.
+  items:
+    - question: Welche Orte gehören zum Einsatzgebiet?
+      answer: L4U ist rund um Cottbus im Einsatz, mit Fahrten bis zu 100 Kilometern. Größere Aufträge sind auch in Berlin oder Dresden möglich. Den konkreten Einsatzort bitte in der Anfrage nennen.
+    - question: Kann ich mehrere Leistungen kombinieren?
+      answer: Ja. Entrümpelung, Transport und Gartenpflege lassen sich nach Bedarf miteinander verbinden. Beschreiben Sie alle anstehenden Aufgaben, damit eine passende Paketlösung besprochen werden kann.
+    - question: Was kostet mein Auftrag?
+      answer: Für diesen Entwurf sind keine Preise hinterlegt. Umfang, Anfahrt und Aufwand müssen für ein konkretes Angebot geklärt werden. Eine kurze Beschreibung Ihres Vorhabens ist dafür der erste Schritt.
+
+contact:
+  id: kontakt
+  eyebrow: 04 / IHR NÄCHSTER SCHRITT
+  title:
+    - AUFTRAG?
+    - FANGEN
+    - WIR AN.
+  text: Was muss weg, wohin oder gepflegt werden? Bereiten Sie hier Ihre Anfrage vor und nehmen Sie über MyHammer Kontakt auf.
+  person_role: TRANSPORT & GARTEN
+  myhammer_label: DIREKT ZU MYHAMMER
+  myhammer_request: https://www.my-hammer.de/send-request-to/l4u-lukas-urbanek-transport-und-garten
+  myhammer_profile: https://www.my-hammer.de/auftragnehmer/l4u-lukas-urbanek-transport-und-garten
+  myhammer_source: https://www.my-hammer.de/garten-aussenbereich/garten-landschaftsbauer-berufe/luebben?page=11
+
+form:
+  eyebrow: IHRE PROJEKTANFRAGE
+  demo_label: Lokale Vorschau
+  service_label: Wobei darf ich helfen?
+  service_placeholder: Leistung auswählen
+  place_label: Wo ist der Einsatzort?
+  place_placeholder: z. B. Cottbus
+  project_label: Was steht an?
+  project_placeholder: Beschreiben Sie Ihr Vorhaben, den Umfang und Ihren Wunschtermin.
+  name_label: Ihr Name
+  name_optional: (optional)
+  name_placeholder: Vor- und Nachname
+  hint: "* Pflichtfelder. Diese Vorschau erstellt nur einen Anfragetext. Es wird nichts gesendet oder dauerhaft gespeichert."
+  submit: Anfrage vorbereiten
+  options:
+    - Entrümpelung & Auflösung
+    - Transport
+    - Gartenpflege
+    - Mehrere Leistungen
+  result_eyebrow: VORLAGE ERSTELLT
+  result_title: Bereit für den nächsten Schritt.
+  result_text_before: "Ihre Anfrage ist vorbereitet, aber "
+  result_text_strong: noch nicht gesendet
+  result_text_after: ". Kopieren Sie den Text und fügen Sie ihn bei MyHammer in Ihre Anfrage ein."
+  result_label: Vorbereiteter Anfragetext
+  copy: Text kopieren
+  open_myhammer: MyHammer öffnen
+  save: Als Textdatei speichern
+  copied: Anfragetext kopiert. Es wurde noch nichts gesendet.
+  copy_fallback: Bitte den markierten Text manuell kopieren.
+  saved: Textdatei erstellt. Es wurde noch nichts gesendet.
+  filename: L4U-Projektanfrage.txt
+  place_error: Bitte nennen Sie den Einsatzort.
+  project_error: Bitte beschreiben Sie Ihr Vorhaben.
+  letter:
+    greeting: "Guten Tag Herr Urbanek,"
+    intro: "ich möchte folgende Leistung anfragen:"
+    place_label: "Einsatzort:"
+    project_label: "Mein Vorhaben:"
+    closing: Bitte teilen Sie mir mit, ob Sie den Auftrag übernehmen können und welche Angaben Sie für ein Angebot benötigen.
+    regards: Freundliche Grüße
+
+legal:
+  close: Dialog schließen
+  impressum:
+    eyebrow: NOCH NICHT VERÖFFENTLICHT
+    title: Impressum · Entwurf
+    paragraphs:
+      - Dieses Dokument ist eine lokale Designvorschau für L4U – Lukas Urbanek – Transport und Garten, kein veröffentlichter Unternehmensauftritt.
+      - Vor einer Veröffentlichung müssen die vollständigen Anbieter- und Kontaktangaben vom Inhaber ergänzt und geprüft werden. In diesem Entwurf wurden keine Anschrift, Telefonnummer oder E-Mail-Adresse erfunden.
+  datenschutz:
+    eyebrow: HINWEIS ZUR VORSCHAU
+    title: Datenschutz · Entwurf
+    paragraphs:
+      - Die Website-Vorschau lädt keine externen Schriften, Bilder, Analyse- oder Kartendienste. Die Formularangaben bleiben im Arbeitsspeicher dieser Seite. Sie werden nicht automatisch übermittelt und nicht dauerhaft gespeichert.
+      - Nur auf Ihren Klick kann der Anfragetext in die Zwischenablage kopiert oder als lokale Datei gespeichert werden. Externe MyHammer-Links verlassen diese Vorschau.
+      - Für eine veröffentlichte Website muss eine zum tatsächlichen Hosting und Kontaktweg passende Datenschutzerklärung erstellt werden.
+
+footer:
+  owner_line: Lukas Urbanek
+  trade_line: Transport & Garten
+  profile_label: MyHammer-Profil
+  impressum_label: Impressum · Entwurf
+  datenschutz_label: Datenschutz · Entwurf
+  note: Designkonzept 02 · Nicht zur Veröffentlichung bestimmt.
+  media: Visualisierung auf Basis eines bereitgestellten Fahrzeugfotos.
+  source_label: "Inhaltsquelle: MyHammer ↗"

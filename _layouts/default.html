@@ -1,0 +1,266 @@
+{%- assign d = site.data.data -%}
+<!DOCTYPE html>
+<html lang="{{ d.meta.lang }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="robots" content="{{ d.meta.robots }}">
+  <meta name="referrer" content="no-referrer">
+  <title>{{ d.meta.title }}</title>
+  <meta name="description" content="{{ d.meta.description }}">
+  <link rel="stylesheet" href="{{ '/assets/css/site.css' | relative_url }}">
+  <style>
+    .utility {
+      --theme-accent: {{ d.theme.accent }};
+      --theme-accent-hover: {{ d.theme.accent_hover }};
+      --theme-bg: {{ d.theme.bg }};
+      --theme-panel: {{ d.theme.panel }};
+      --theme-deep: {{ d.theme.deep }};
+      --theme-text: {{ d.theme.text }};
+      --theme-muted: {{ d.theme.muted }};
+      --theme-soft: {{ d.theme.accent }}24;
+      --hero-image: url('{{ d.hero.image | relative_url }}');
+    }
+  </style>
+</head>
+<body class="utility">
+  <a class="skip-link" href="#inhalt">{{ d.header.skip_link }}</a>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="logo" href="#inhalt" aria-label="{{ d.brand.logo_aria }}"><span class="wordmark">{{ d.brand.name }}<span class="brand-dot"></span></span><span class="logo-text">{{ d.brand.owner | upcase }}</span></a>
+      <nav class="navlinks" aria-label="{{ d.header.nav_aria }}">
+        {% for item in d.nav %}<a href="{{ item.href }}">{{ item.label }}</a>{% endfor %}
+      </nav>
+      <a href="#kontakt" class="btn header-cta">{{ d.header.cta }}{% include icon.html name="arrow-ne" %}</a>
+      <button type="button" class="menu-toggle" aria-label="{{ d.header.menu_open }}" aria-expanded="false" aria-controls="mobile-nav">{% include icon.html name="menu" %}</button>
+    </div>
+    <nav id="mobile-nav" class="mobile-nav" aria-label="{{ d.header.mobile_nav_aria }}" hidden>
+      {% for item in d.mobile_nav %}<a href="{{ item.href }}">{{ item.label }} {% include icon.html name="arrow-right" %}</a>{% endfor %}
+    </nav>
+  </header>
+
+  <main id="inhalt">
+    <section class="hero-utility">
+      <div class="wrap">
+        <div class="utility-topline"><span>{{ d.hero.kicker_left }}</span><span>{{ d.hero.kicker_right }}</span></div>
+        <div class="utility-hero-grid">
+          <div class="utility-hero-copy">
+            <h1>{% for line in d.hero.title %}{{ line }}{% unless forloop.last %}<br>{% endunless %}{% endfor %}<br><span>{{ d.hero.title_accent }}</span></h1>
+            <p>{{ d.hero.text | newline_to_br }}</p>
+            <a href="#kontakt" class="btn">{{ d.hero.cta }}{% include icon.html name="arrow-right" %}</a>
+          </div>
+          <div class="utility-hero-art">
+            <div class="utility-art-bottom">
+              {% for stat in d.hero.stats %}
+              <div><strong>{{ stat.value }}</strong><span>{{ stat.label }}</span></div>
+              {% endfor %}
+              {% include icon.html name="route" %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="utility-ribbon">
+      <div class="wrap">
+        {% for item in d.ribbon %}
+          {% unless forloop.first %}
+            {% if forloop.last %}{% include icon.html name="arrow-right" %}{% else %}{% include icon.html name="plus" %}{% endif %}
+          {% endunless %}
+          <span>{{ item }}</span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <section id="{{ d.services.id }}" class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <span class="eyebrow">{{ d.services.eyebrow }}</span>
+            <h2>{% for line in d.services.title %}{{ line }}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</h2>
+          </div>
+          <p>{{ d.services.intro }}</p>
+        </div>
+        <div class="utility-services">
+          {% for service in d.services.items %}
+          <details class="utility-service"{% if service.open %} open{% endif %} style="--service-icon: url('{{ service.icon | relative_url }}')">
+            <summary>
+              <span class="number">{{ service.number }}</span>
+              <h3>{{ service.title }}</h3>
+              {% include icon.html name="plus" %}
+            </summary>
+            <div class="utility-service-content">
+              <div>
+                <p>{{ service.text }}</p>
+                <button class="text-link" data-request="{{ service.request }}">{{ d.services.request_label }} {% include icon.html name="arrow-ne" %}</button>
+              </div>
+              <div class="tag-row">{% for tag in service.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
+            </div>
+          </details>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <section id="{{ d.area.id }}" class="section utility-scope">
+      <div class="wrap">
+        <div class="scope-copy">
+          <span class="eyebrow">{{ d.area.eyebrow }}</span>
+          <h2>{% for line in d.area.title %}{{ line }}<br>{% endfor %}<span>{{ d.area.title_accent | newline_to_br }}</span></h2>
+          <p>{{ d.area.text }}</p>
+          <div class="region-pills" aria-label="Einsatzregion wählen">
+            {% for region in d.area.regions %}
+            <button type="button" data-region="{{ region.id }}"{% if region.default %} class="active"{% endif %} aria-pressed="{{ region.default }}">{{ region.label }}</button>
+            {% endfor %}
+          </div>
+          {% assign default_region = d.area.regions | where: "default", true | first %}
+          <p class="region-answer" aria-live="polite">{{ default_region.answer }}</p>
+        </div>
+        <div>
+          <div class="scope-map">{% include region-map.svg aria=d.area.map_aria %}</div>
+          <p class="map-caption">{{ d.area.map_caption }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="{{ d.about.id }}" class="section">
+      <div class="wrap utility-about-grid">
+        <div class="utility-about-mark" aria-hidden="true">
+          <div class="mark-line"><span>{{ d.about.mark_left }}</span><span>{{ d.about.mark_right }}</span></div>
+          <strong>{{ d.brand.name }}</strong>
+          <div class="mark-line"><span>{{ d.brand.owner | upcase }}</span>{% include icon.html name="arrow-ne" %}</div>
+        </div>
+        <div>
+          <span class="eyebrow">{{ d.about.eyebrow }}</span>
+          <h2>{% for line in d.about.title %}{{ line }}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</h2>
+          <p>{{ d.about.text }}</p>
+          <span class="about-sign">{{ d.about.sign }}</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="{{ d.faq.id }}" class="section faq-section">
+      <div class="wrap faq-layout">
+        <div>
+          <span class="eyebrow">{{ d.faq.eyebrow }}</span>
+          <h2>{{ d.faq.title }}</h2>
+        </div>
+        <div class="faq-list">
+          {% for item in d.faq.items %}
+          <details>
+            <summary>{{ item.question }}<span>{% include icon.html name="plus" %}</span></summary>
+            <p>{{ item.answer }}</p>
+          </details>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+
+    <section id="{{ d.contact.id }}" class="section utility-contact">
+      <div class="wrap contact-grid">
+        <div class="contact-intro">
+          <span class="eyebrow">{{ d.contact.eyebrow }}</span>
+          <h2>{% for line in d.contact.title %}{{ line }}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</h2>
+          <p>{{ d.contact.text }}</p>
+          <div class="contact-person">
+            <div class="person-initials">{{ d.brand.initials }}</div>
+            <div>
+              <strong>{{ d.brand.owner }}</strong>
+              <small>{{ d.contact.person_role }}</small>
+            </div>
+          </div>
+          <a class="text-link contact-external" href="{{ d.contact.myhammer_request }}" target="_blank" rel="noopener noreferrer">{{ d.contact.myhammer_label }} {% include icon.html name="arrow-ne" %}</a>
+        </div>
+        <div>
+          <form id="contact-form" class="request-form">
+            <div class="form-topline">
+              <span class="eyebrow">{{ d.form.eyebrow }}</span>
+              <span class="demo-label">{{ d.form.demo_label }}</span>
+            </div>
+            <div class="form-grid">
+              <label>{{ d.form.service_label }} <span aria-hidden="true">*</span>
+                <select name="service" id="request-service" required>
+                  <option value="" selected disabled>{{ d.form.service_placeholder }}</option>
+                  {% for option in d.form.options %}<option value="{{ option }}">{{ option }}</option>{% endfor %}
+                </select>
+              </label>
+              <label>{{ d.form.place_label }} <span aria-hidden="true">*</span>
+                <input name="place" id="request-place" required maxlength="100" autocomplete="address-level2" placeholder="{{ d.form.place_placeholder }}">
+              </label>
+              <label class="full">{{ d.form.project_label }} <span aria-hidden="true">*</span>
+                <textarea name="project" id="request-project" rows="3" required maxlength="2000" placeholder="{{ d.form.project_placeholder }}"></textarea>
+              </label>
+              <label class="full">{{ d.form.name_label }} <span class="optional">{{ d.form.name_optional }}</span>
+                <input name="name" id="request-name" maxlength="100" autocomplete="name" placeholder="{{ d.form.name_placeholder }}">
+              </label>
+            </div>
+            <p class="form-hint">{{ d.form.hint }}</p>
+            <button class="btn submit-btn" type="submit">{{ d.form.submit }} {% include icon.html name="arrow-right" %}</button>
+          </form>
+          <section id="request-result" class="request-result" aria-live="polite" tabindex="-1" hidden>
+            <span class="eyebrow">{{ d.form.result_eyebrow }}</span>
+            <h3>{{ d.form.result_title }}</h3>
+            <p>{{ d.form.result_text_before }}<strong>{{ d.form.result_text_strong }}</strong>{{ d.form.result_text_after }}</p>
+            <label for="request-text" class="sr-only">{{ d.form.result_label }}</label>
+            <textarea id="request-text" readonly rows="9"></textarea>
+            <div class="result-actions">
+              <button type="button" class="btn" id="copy-request">{{ d.form.copy }} {% include icon.html name="copy" %}</button>
+              <a class="btn btn-outline" href="{{ d.contact.myhammer_request }}" target="_blank" rel="noopener noreferrer">{{ d.form.open_myhammer }} {% include icon.html name="arrow-ne" %}</a>
+              <button type="button" id="save-request" class="text-link">{{ d.form.save }} {% include icon.html name="download" %}</button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <div class="footer-top">
+        <a href="#inhalt" class="footer-brand">{{ d.brand.name }}<span>{{ d.footer.owner_line }}<br>{{ d.footer.trade_line }}</span></a>
+        <div class="footer-links">
+          <a href="{{ d.contact.myhammer_profile }}" target="_blank" rel="noopener noreferrer">{{ d.footer.profile_label }} {% include icon.html name="arrow-ne" %}</a>
+          <button type="button" data-dialog="impressum">{{ d.footer.impressum_label }}</button>
+          <button type="button" data-dialog="datenschutz">{{ d.footer.datenschutz_label }}</button>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>{{ d.footer.note }}</span>
+        <span>{{ d.footer.media }} <a href="{{ d.contact.myhammer_source }}" target="_blank" rel="noopener noreferrer">{{ d.footer.source_label }}</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <dialog id="legal-dialog" class="legal-dialog">
+    <button type="button" class="dialog-close" aria-label="{{ d.legal.close }}">{% include icon.html name="close" %}</button>
+    <div id="legal-content"></div>
+  </dialog>
+  <template id="legal-impressum">
+    <span class="eyebrow">{{ d.legal.impressum.eyebrow }}</span>
+    <h2>{{ d.legal.impressum.title }}</h2>
+    {% for p in d.legal.impressum.paragraphs %}<p>{{ p }}</p>{% endfor %}
+  </template>
+  <template id="legal-datenschutz">
+    <span class="eyebrow">{{ d.legal.datenschutz.eyebrow }}</span>
+    <h2>{{ d.legal.datenschutz.title }}</h2>
+    {% for p in d.legal.datenschutz.paragraphs %}<p>{{ p }}</p>{% endfor %}
+  </template>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script type="application/json" id="site-runtime">
+    {
+      "header": {
+        "menu_open": {{ d.header.menu_open | jsonify }},
+        "menu_close": {{ d.header.menu_close | jsonify }}
+      },
+      "form": {{ d.form | jsonify }},
+      "regions": {
+        {% for region in d.area.regions %}
+        {{ region.id | jsonify }}: {{ region.answer | jsonify }}{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      }
+    }
+  </script>
+  <script src="{{ '/assets/js/site.js' | relative_url }}"></script>
+</body>
+</html>

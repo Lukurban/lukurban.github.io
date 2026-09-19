@@ -1,0 +1,15 @@
+title: L4U · Lukas Urbanek
+url: https://transportundgarten.de
+baseurl: ""
+markdown: kramdown
+exclude:
+  - L4U_4_varianta_saita.html
+  - referecnce
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - 5289730422847776885.jpg
+  - l4u-renault-master-hero.png
+  - l4u-van-residential-hero.png
+  - l4u-van-road-hero.png
