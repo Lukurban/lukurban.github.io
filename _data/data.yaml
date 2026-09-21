@@ -20,9 +20,10 @@ brand:
   name: L4U
   owner: Lukas Urbanek
   tagline: TRANSPORT & GARTEN
+  logo_tagline: Transport und Garten
   region: LAUSITZ
   initials: LU
-  logo_aria: L4U – Lukas Urbanek, Startseite
+  logo_aria: L4U – Lukas Urbanek, Transport und Garten, Startseite
 
 nav:
   - href: "#leistungen"
@@ -53,28 +54,22 @@ header:
   mobile_nav_aria: Mobile Navigation
 
 hero:
-  kicker_left: TRANSPORT / ENTRÜMPELUNG / GARTEN
-  kicker_right: COTTBUS + UMGEBUNG
+  kicker_left: Einer für die schweren Sachen, verlässlich und effizient.
+  kicker_right: Berlin – Cottbus – Dresden
   title:
-    - SIE HABEN
-    - WAS VOR.
-  title_accent: ICH PACK’S AN.
-  text: |-
-    Platz schaffen. Waren bewegen. Grün pflegen.
-    L4U ist Ihr direkter Ansprechpartner, wenn aus einer Aufgabe ein erledigter Auftrag werden soll.
+    - Es muss weg?
+    - Es steht im Weg?
+    - Zuviel des Grünen?
+  title_accent: Ich pack’s an!
+  text: L4U ist Ihr direkter Ansprechpartner, wenn es darum geht, zuverlässig, schnell und sauber Ihre Projekte umzusetzen und Aufgaben zu lösen.
   cta: LOS GEHT’S
   image: /l4u-van-residential-hero-v2.png
-  stats:
-    - value: 100 km
-      label: RUND UM COTTBUS
-    - value: 3,5 t
-      label: WARENTRANSPORTE LAUT PROFIL
 
 ribbon:
-  - ENTRÜMPELUNG
-  - TRANSPORT
-  - GARTENPFLEGE
-  - EIN ANSPRECHPARTNER.
+  - Wohnungsauflösung
+  - Entrümpelung
+  - Transporte
+  - Gartenpflege
 
 services:
   id: leistungen

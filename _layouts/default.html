@@ -27,7 +27,7 @@
   <a class="skip-link" href="#inhalt">{{ d.header.skip_link }}</a>
   <header class="site-header">
     <div class="wrap header-inner">
-      <a class="logo" href="#inhalt" aria-label="{{ d.brand.logo_aria }}"><span class="wordmark">{{ d.brand.name }}<span class="brand-dot"></span></span><span class="logo-text">{{ d.brand.owner | upcase }}</span></a>
+      <a class="logo" href="#inhalt" aria-label="{{ d.brand.logo_aria }}"><span class="wordmark">{{ d.brand.name }}<span class="brand-dot"></span></span><span class="logo-copy"><span class="logo-text">{{ d.brand.owner }}</span><span class="logo-tagline">{{ d.brand.logo_tagline }}</span></span></a>
       <nav class="navlinks" aria-label="{{ d.header.nav_aria }}">
         {% for item in d.nav %}<a href="{{ item.href }}">{{ item.label }}</a>{% endfor %}
       </nav>
@@ -50,12 +50,14 @@
             <a href="#kontakt" class="btn">{{ d.hero.cta }}{% include icon.html name="arrow-right" %}</a>
           </div>
           <div class="utility-hero-art">
+            {% if d.hero.stats %}
             <div class="utility-art-bottom">
               {% for stat in d.hero.stats %}
               <div><strong>{{ stat.value }}</strong><span>{{ stat.label }}</span></div>
               {% endfor %}
               {% include icon.html name="route" %}
             </div>
+            {% endif %}
           </div>
         </div>
       </div>
@@ -64,9 +66,7 @@
     <div class="utility-ribbon">
       <div class="wrap">
         {% for item in d.ribbon %}
-          {% unless forloop.first %}
-            {% if forloop.last %}{% include icon.html name="arrow-right" %}{% else %}{% include icon.html name="plus" %}{% endif %}
-          {% endunless %}
+          {% unless forloop.first %}{% include icon.html name="plus" %}{% endunless %}
           <span>{{ item }}</span>
         {% endfor %}
       </div>
