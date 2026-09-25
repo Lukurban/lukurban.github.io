@@ -328,3 +328,13 @@
 @media(max-width:420px){
   .hero-utility h1,.hero-utility h1 span{font-size:30px}
 }
+
+
+/* Bugfix pass (2026-09-25 evening): native controls follow the dark theme, and
+   footer link blocks share one top line. The select dropdown picked up the OS
+   light scheme because the page never declared a color-scheme; the Impressum
+   and Datenschutz buttons kept their 10px vertical padding from the base
+   footer styles, which pushed them below the MyHammer anchor. */
+.utility{color-scheme:dark}
+.utility-contact .request-form select option{background:#171515;color:#f5f2ee}
+.footer-link-block a,.footer-link-block button{min-height:0;padding:0;line-height:1.45}
