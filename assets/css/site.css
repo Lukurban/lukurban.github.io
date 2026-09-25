@@ -280,3 +280,51 @@
 .footer-link-block small{font-size:10px;line-height:1.55;color:var(--muted)}
 .footer-contacts{margin-top:14px}
 @media(max-width:700px){.footer-links{gap:22px}}
+
+
+/* Iteration pass (2026-09-25 evening): the stacked hero overlays muted the new
+   portrait into the panel — only the copy column needs protection, the photo
+   itself must read. Restore display-scale headings and larger service icons. */
+.utility-hero-art{filter:saturate(.94)}
+.utility-hero-art{-webkit-mask-image:linear-gradient(90deg,transparent 0%,transparent 52%,#000 84%);mask-image:linear-gradient(90deg,transparent 0%,transparent 52%,#000 84%)}
+.utility-hero-art::before{background:
+  linear-gradient(90deg,rgba(16,26,39,.97) 0%,rgba(16,26,39,.92) 30%,rgba(16,26,39,.74) 43%,rgba(16,26,39,.4) 55%,rgba(16,26,39,.12) 67%,rgba(16,26,39,.05) 80%,rgba(16,26,39,.22) 100%),
+  linear-gradient(180deg,rgba(16,26,39,.82) 0%,rgba(16,26,39,0) 26%,rgba(16,26,39,0) 64%,rgba(16,26,39,.6) 100%)}
+@media(min-width:901px){
+  .utility-hero-art{background-size:auto 112%;background-position:calc(100% + 10px) 46%}
+  .utility-hero-copy{width:56%;padding-left:38px}
+}
+@media(min-width:701px) and (max-width:900px){
+  .utility-hero-art{background-position:calc(100% + 10px) 50%}
+  .utility-hero-copy{width:60%;padding-left:26px}
+}
+.hero-utility h1,.hero-utility h1 span{font-size:clamp(36px,4.3vw,56px);line-height:1.05;letter-spacing:-.032em}
+@media(min-width:701px){
+  .utility-service .service-head{grid-template-columns:52px minmax(0,1fr) 220px}
+  .utility-service .service-icon{width:196px;height:128px}
+}
+.utility-contact .contact-intro h2{font-size:58px;letter-spacing:-.035em}
+
+/* Scope photo: the corner marks from the old schematic map, kept for continuity. */
+.utility-scope .scope-photo{position:relative}
+.utility-scope .scope-photo::before,.utility-scope .scope-photo::after{content:'+';position:absolute;color:var(--theme-accent);font-size:27px;font-weight:300;line-height:1;z-index:1}
+.utility-scope .scope-photo::before{top:-15px;left:-9px}
+.utility-scope .scope-photo::after{bottom:-13px;right:-9px}
+
+@media(max-width:1180px) and (min-width:901px){
+  .hero-utility h1,.hero-utility h1 span{font-size:clamp(34px,4.6vw,50px)}
+}
+@media(max-width:900px){
+  .hero-utility h1,.hero-utility h1 span{font-size:40px}
+  .utility-contact .contact-intro h2{font-size:50px}
+}
+@media(max-width:700px){
+  .hero-utility h1,.hero-utility h1 span{font-size:34px;line-height:1.06}
+  .utility-contact .contact-intro h2{font-size:44px}
+  .utility-service .service-icon{width:88px;height:60px}
+  .utility-hero-art{-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 24%);mask-image:linear-gradient(180deg,transparent 0%,#000 24%)}
+  .utility-hero-art::before{inset:0;bottom:0;background:linear-gradient(180deg,rgba(16,26,39,.4) 0%,rgba(16,26,39,0) 34%,rgba(16,26,39,0) 60%,var(--theme-panel) 96%)}
+}
+@media(max-width:420px){
+  .hero-utility h1,.hero-utility h1 span{font-size:30px}
+}
