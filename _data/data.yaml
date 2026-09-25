@@ -22,7 +22,7 @@ brand:
   tagline: TRANSPORT & GARTEN
   logo_tagline: Transport und Garten
   region: LAUSITZ
-  initials: LU
+  initials: L4U
   logo_aria: L4U – Lukas Urbanek, Transport und Garten, Startseite
 
 nav:
@@ -40,10 +40,8 @@ mobile_nav:
     label: Über mich
   - href: "#gebiet"
     label: Einsatzgebiet
-  - href: "#fragen"
-    label: Häufige Fragen
   - href: "#kontakt"
-    label: Anfrage vorbereiten
+    label: Anfrage versenden
 
 header:
   cta: JETZT ANFRAGEN
@@ -57,13 +55,12 @@ hero:
   kicker_left: Einer für die schweren Sachen, verlässlich und effizient.
   kicker_right: Berlin – Cottbus – Dresden
   title:
-    - Es muss weg?
-    - Es steht im Weg?
+    - Keller voll?
+    - Mieter weg?
     - Zuviel des Grünen?
-  title_accent: Ich pack’s an!
-  text: L4U ist Ihr direkter Ansprechpartner, wenn es darum geht, zuverlässig, schnell und sauber Ihre Projekte umzusetzen und Aufgaben zu lösen.
+  text: L4U ist Ihr direkter Ansprechpartner, wenn es darum geht, zuverlässig, schnell und zielorientiert Ihre Projekte umzusetzen und Aufgaben zu lösen.
   cta: LOS GEHT’S
-  image: /l4u-van-residential-hero-v2.png
+  image: /l4u-hero-lukas-van.jpg
 
 ribbon:
   - Wohnungsauflösung
@@ -77,36 +74,24 @@ services:
   title:
     - WAS ANSTEHT.
     - WIRD ANGEPACKT.
-  intro: Drei Leistungsbereiche. Für private Haushalte und Gewerbe. Einzeln oder als passende Paketlösung.
+  intro: Drei Leistungsbereiche für private Haushalte, Hausverwaltungen, Gewerbe und öffentliche Einrichtungen.
   request_label: Diese Leistung anfragen
   items:
     - number: "01 /"
-      title: ENTRÜMPELUNG
-      text: Wohnungsauflösungen, Keller, Dachböden und Garagen. Dazu Büro- und Gewerbeauflösungen, stark zugestellte Wohnungen und Sperrmüllentsorgung.
-      request: Entrümpelung & Auflösung
+      title: Entrümpelung / Wohnungsauflösung
+      text: Einfamilienhäuser, Wohnungen, Keller, Dachboden, Garagen, Büro- und Gewerbeflächen, auch Messie-Wohnungen sowie Sperrmüllentsorgungen aller Art.
+      request: Entrümpelung / Wohnungsauflösung
       icon: /service-clearance-line.png
-      tags:
-        - PRIVAT & GEWERBE
-        - SPERRMÜLL
-      open: false
     - number: "02 /"
-      title: TRANSPORT
-      text: Warentransporte bis 3,5 Tonnen laut Unternehmensprofil. Beschreiben Sie, was wohin gebracht werden soll, damit wir die Details abstimmen können.
-      request: Transport
+      title: Warentransport
+      text: Warentransport bis 1,2 Tonnen pro Fahrt bis 200 Kilometer im Umkreis von Cottbus, auch Umzüge.
+      request: Warentransport
       icon: /service-transport-line.png
-      tags:
-        - WARENTRANSPORTE
-        - INDIVIDUELLE ROUTEN
-      open: true
     - number: "03 /"
-      title: GARTENPFLEGE
-      text: Grün- und Gartenpflege rund um Ihr Grundstück. Rasen, Hecken und Grünflächen – passend zu den anstehenden Aufgaben.
+      title: Gartenpflege
+      text: Grün- und Gartenpflege, Zuschnitt, Rasenmähen, Lieferung von Gartenbedarf sowie Entsorgung.
       request: Gartenpflege
       icon: /service-garden-line.png
-      tags:
-        - GRÜN- & GARTENPFLEGE
-        - AUCH KOMBINIERBAR
-      open: false
 
 area:
   id: gebiet
@@ -116,54 +101,29 @@ area:
   title_accent: |-
     FÜR SIE
     UNTERWEGS.
-  text: Bis zu 100 Kilometer rund um Cottbus. Größere Projekte? Nach Absprache auch Berlin und Dresden.
-  map_aria: "Schematische Darstellung: Cottbus und Umgebung, Berlin und Dresden bei größeren Aufträgen. Nicht maßstabsgetreu."
-  map_caption: SCHEMATISCH · NICHT MASSSTABSGETREU
+  text: Um diese Achse herum erstreckt sich mein Einsatzgebiet. In Forst bei Cottbus ansässig fahre ich über Südbrandenburg bis nach Berlin und über Nordsachsen bis nach Dresden. Egal ob Eisenhüttenstadt, Bad Saarow oder Spremberg, hier bin ich zu Hause, hier möchte ich was bewegen.
+  image: /l4u-van-garden.jpg
+  image_aria: Der L4U Transporter steht auf einer Wiese vor Bäumen.
   regions:
-    - id: local
-      label: Cottbus & Umgebung
-      answer: Rund um Cottbus · Fahrten bis zu 100 Kilometer.
-      default: true
-    - id: berlin
-      label: Berlin
-      answer: Berlin · für größere Aufträge nach Absprache.
-      default: false
-    - id: dresden
-      label: Dresden
-      answer: Dresden · für größere Aufträge nach Absprache.
-      default: false
+    - label: Berlin.
+    - label: Cottbus.
+    - label: Dresden.
 
 about:
   id: ueber
-  mark_left: TRANSPORT & GARTEN
-  mark_right: LAUSITZ
   eyebrow: 03 / DER MENSCH DAHINTER
   title:
-    - KEIN UMWEG.
-    - EIN ANSPRECHPARTNER.
+    - Einer für die
+    - schweren Sachen.
   text: Ich bin Lukas Urbanek. Ich bin flexibel, packe gern an und stehe für einen ehrlichen Umgang. Für Ihr Vorhaben suche ich eine praktische Lösung – und bei Bedarf kombiniere ich mehrere Leistungen miteinander.
-  sign: LUKAS URBANEK / L4U
-
-faq:
-  id: fragen
-  eyebrow: HÄUFIGE FRAGEN
-  title: KLARE ANTWORTEN.
-  items:
-    - question: Welche Orte gehören zum Einsatzgebiet?
-      answer: L4U ist rund um Cottbus im Einsatz, mit Fahrten bis zu 100 Kilometern. Größere Aufträge sind auch in Berlin oder Dresden möglich. Den konkreten Einsatzort bitte in der Anfrage nennen.
-    - question: Kann ich mehrere Leistungen kombinieren?
-      answer: Ja. Entrümpelung, Transport und Gartenpflege lassen sich nach Bedarf miteinander verbinden. Beschreiben Sie alle anstehenden Aufgaben, damit eine passende Paketlösung besprochen werden kann.
-    - question: Was kostet mein Auftrag?
-      answer: Für diesen Entwurf sind keine Preise hinterlegt. Umfang, Anfahrt und Aufwand müssen für ein konkretes Angebot geklärt werden. Eine kurze Beschreibung Ihres Vorhabens ist dafür der erste Schritt.
+  more: Ohne Umwege direkt zum Ziel, gerne auch mit Sonderwünschen. Ich bin flexibel und kann gut anpacken und übe meine Tätigkeit mit Leidenschaft und Ehrlichkeit aus, die Zufriedenheit meiner Kunden steht an oberster Stelle. Bei mir sind Sie richtig, wenn es darum geht, Lösungen zu finden, um weiterzukommen.
 
 contact:
   id: kontakt
   eyebrow: 04 / IHR NÄCHSTER SCHRITT
   title:
-    - AUFTRAG?
-    - FANGEN
-    - WIR AN.
-  text: Was muss weg, wohin oder gepflegt werden? Rufen Sie an, schreiben Sie eine E-Mail oder bereiten Sie hier Ihre Anfrage vor.
+    - Los geht’s!
+  text: Erstellen Sie Ihre unverbindliche Anfrage hier, vereinbaren Sie einen Besichtigungstermin oder lassen Sie sich ein Angebot erstellen. Ich bin stets erreichbar und falls mal nicht, hinterlassen Sie eine Nachricht, ich rufe umgehend zurück.
   person_role: TRANSPORT & GARTEN
   phone: "+49 15566 960566"
   phone_href: "tel:+4915566960566"
@@ -180,21 +140,24 @@ contact:
 
 form:
   eyebrow: IHRE PROJEKTANFRAGE
-  demo_label: Lokale Vorschau
   service_label: Wobei darf ich helfen?
   service_placeholder: Leistung auswählen
   place_label: Wo ist der Einsatzort?
   place_placeholder: z. B. Cottbus
   project_label: Was steht an?
   project_placeholder: Beschreiben Sie Ihr Vorhaben, den Umfang und Ihren Wunschtermin.
+  email_label: Ihre E-Mail
+  email_placeholder: name@beispiel.de
+  phone_label: Telefonnummer
+  phone_placeholder: z. B. 0155 696 056 60
   name_label: Ihr Name
   name_optional: (optional)
   name_placeholder: Vor- und Nachname
-  hint: "* Pflichtfelder. Diese Vorschau erstellt nur einen Anfragetext. Es wird nichts gesendet oder dauerhaft gespeichert."
-  submit: Anfrage vorbereiten
+  hint: "* Pflichtfelder. Der Anfragetext wird nur in Ihrem Browser erstellt – es wird nichts automatisch gesendet oder dauerhaft gespeichert."
+  submit: Anfrage versenden
   options:
-    - Entrümpelung & Auflösung
-    - Transport
+    - Entrümpelung / Wohnungsauflösung
+    - Warentransport
     - Gartenpflege
     - Mehrere Leistungen
   result_eyebrow: VORLAGE ERSTELLT
@@ -217,6 +180,8 @@ form:
     intro: "ich möchte folgende Leistung anfragen:"
     place_label: "Einsatzort:"
     project_label: "Mein Vorhaben:"
+    email_label: "Meine E-Mail-Adresse:"
+    phone_label: "Meine Telefonnummer:"
     closing: Bitte teilen Sie mir mit, ob Sie den Auftrag übernehmen können und welche Angaben Sie für ein Angebot benötigen.
     regards: Freundliche Grüße
 
@@ -224,27 +189,31 @@ legal:
   close: Dialog schließen
   impressum:
     eyebrow: KONTAKT
-    title: Impressum · Entwurf
+    title: Impressum
     paragraphs:
       - L4U – Lukas Urbanek – Transport und Garten.
+      - Lukas Urbanek
+      - Teichstraße 152c
+      - 03149 Forst (Lausitz)
       - "Telefon: +49 15566 960566"
       - "E-Mail: lukas.urbanek@transportundgarten.de"
       - "Website: https://transportundgarten.de/"
-      - Eine Anschrift ist hier noch nicht hinterlegt. Vor einer Veröffentlichung müssen die vollständigen Anbieterangaben vom Inhaber ergänzt und geprüft werden.
   datenschutz:
-    eyebrow: HINWEIS ZUR VORSCHAU
-    title: Datenschutz · Entwurf
+    eyebrow: HINWEIS
+    title: Datenschutz
     paragraphs:
-      - Die Website-Vorschau lädt keine externen Schriften, Bilder, Analyse- oder Kartendienste. Die Formularangaben bleiben im Arbeitsspeicher dieser Seite. Sie werden nicht automatisch übermittelt und nicht dauerhaft gespeichert.
-      - Nur auf Ihren Klick kann der Anfragetext in die Zwischenablage kopiert oder als lokale Datei gespeichert werden. Externe MyHammer-Links verlassen diese Vorschau.
-      - Für eine veröffentlichte Website muss eine zum tatsächlichen Hosting und Kontaktweg passende Datenschutzerklärung erstellt werden.
+      - Diese Website lädt keine externen Schriften, Bilder, Analyse- oder Kartendienste. Die Formularangaben bleiben im Arbeitsspeicher dieser Seite. Sie werden nicht automatisch übermittelt und nicht dauerhaft gespeichert.
+      - Nur auf Ihren Klick kann der Anfragetext in die Zwischenablage kopiert oder als lokale Datei gespeichert werden. Externe MyHammer-Links verlassen diese Website.
+      - Eine vollständige Datenschutzerklärung wird ergänzt, sobald Hosting und Kontaktwege final feststehen.
 
 footer:
   owner_line: Lukas Urbanek
   trade_line: Transport & Garten
   profile_label: MyHammer-Profil
-  impressum_label: Impressum · Entwurf
-  datenschutz_label: Datenschutz · Entwurf
-  note: Designkonzept 02 · Nicht zur Veröffentlichung bestimmt.
-  media: Visualisierung auf Basis eines bereitgestellten Fahrzeugfotos.
-  source_label: "Inhaltsquelle: MyHammer ↗"
+  profile_sub: mit Bildern meiner Einsätze
+  impressum_label: Impressum
+  impressum_address:
+    - Lukas Urbanek
+    - Teichstraße 152c
+    - 03149 Forst (Lausitz)
+  datenschutz_label: Datenschutz

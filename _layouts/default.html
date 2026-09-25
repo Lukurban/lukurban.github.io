@@ -45,7 +45,7 @@
         <div class="utility-topline"><span>{{ d.hero.kicker_left }}</span><span>{{ d.hero.kicker_right }}</span></div>
         <div class="utility-hero-grid">
           <div class="utility-hero-copy">
-            <h1>{% for line in d.hero.title %}{{ line }}{% unless forloop.last %}<br>{% endunless %}{% endfor %}<br><span>{{ d.hero.title_accent }}</span></h1>
+            <h1>{% for line in d.hero.title %}{{ line }}{% unless forloop.last %}<br>{% endunless %}{% endfor %}{% if d.hero.title_accent %}<br><span>{{ d.hero.title_accent }}</span>{% endif %}</h1>
             <p>{{ d.hero.text | newline_to_br }}</p>
             <a href="#kontakt" class="btn">{{ d.hero.cta }}{% include icon.html name="arrow-right" %}</a>
           </div>
@@ -83,20 +83,19 @@
         </div>
         <div class="utility-services">
           {% for service in d.services.items %}
-          <details class="utility-service"{% if service.open %} open{% endif %} style="--service-icon: url('{{ service.icon | relative_url }}')">
-            <summary>
+          <article class="utility-service" style="--service-icon: url('{{ service.icon | relative_url }}')">
+            <div class="service-head">
               <span class="number">{{ service.number }}</span>
               <h3>{{ service.title }}</h3>
-              {% include icon.html name="plus" %}
-            </summary>
+              <div class="service-icon" aria-hidden="true"></div>
+            </div>
             <div class="utility-service-content">
               <div>
                 <p>{{ service.text }}</p>
                 <button class="text-link" data-request="{{ service.request }}">{{ d.services.request_label }} {% include icon.html name="arrow-ne" %}</button>
               </div>
-              <div class="tag-row">{% for tag in service.tags %}<span class="tag">{{ tag }}</span>{% endfor %}</div>
             </div>
-          </details>
+          </article>
           {% endfor %}
         </div>
       </div>
@@ -108,17 +107,16 @@
           <span class="eyebrow">{{ d.area.eyebrow }}</span>
           <h2>{% for line in d.area.title %}{{ line }}<br>{% endfor %}<span>{{ d.area.title_accent | newline_to_br }}</span></h2>
           <p>{{ d.area.text }}</p>
-          <div class="region-pills" aria-label="Einsatzregion wählen">
+          <div class="region-pills" aria-label="Einsatzgebiet">
             {% for region in d.area.regions %}
-            <button type="button" data-region="{{ region.id }}"{% if region.default %} class="active"{% endif %} aria-pressed="{{ region.default }}">{{ region.label }}</button>
+            <span>{{ region.label }}</span>
             {% endfor %}
           </div>
-          {% assign default_region = d.area.regions | where: "default", true | first %}
-          <p class="region-answer" aria-live="polite">{{ default_region.answer }}</p>
         </div>
         <div>
-          <div class="scope-map">{% include region-map.svg aria=d.area.map_aria %}</div>
-          <p class="map-caption">{{ d.area.map_caption }}</p>
+          <figure class="scope-photo">
+            <img src="{{ d.area.image | relative_url }}" alt="{{ d.area.image_aria }}" loading="lazy">
+          </figure>
         </div>
       </div>
     </section>
@@ -126,32 +124,13 @@
     <section id="{{ d.about.id }}" class="section">
       <div class="wrap utility-about-grid">
         <div class="utility-about-mark" aria-hidden="true">
-          <div class="mark-line"><span>{{ d.about.mark_left }}</span><span>{{ d.about.mark_right }}</span></div>
-          <strong>{{ d.brand.name }}</strong>
-          <div class="mark-line"><span>{{ d.brand.owner | upcase }}</span>{% include icon.html name="arrow-ne" %}</div>
+          <span class="about-wordmark">{{ d.brand.name }}</span>
         </div>
         <div>
           <span class="eyebrow">{{ d.about.eyebrow }}</span>
           <h2>{% for line in d.about.title %}{{ line }}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</h2>
           <p>{{ d.about.text }}</p>
-          <span class="about-sign">{{ d.about.sign }}</span>
-        </div>
-      </div>
-    </section>
-
-    <section id="{{ d.faq.id }}" class="section faq-section">
-      <div class="wrap faq-layout">
-        <div>
-          <span class="eyebrow">{{ d.faq.eyebrow }}</span>
-          <h2>{{ d.faq.title }}</h2>
-        </div>
-        <div class="faq-list">
-          {% for item in d.faq.items %}
-          <details>
-            <summary>{{ item.question }}<span>{% include icon.html name="plus" %}</span></summary>
-            <p>{{ item.answer }}</p>
-          </details>
-          {% endfor %}
+          <p>{{ d.about.more }}</p>
         </div>
       </div>
     </section>
@@ -195,7 +174,6 @@
           <form id="contact-form" class="request-form">
             <div class="form-topline">
               <span class="eyebrow">{{ d.form.eyebrow }}</span>
-              <span class="demo-label">{{ d.form.demo_label }}</span>
             </div>
             <div class="form-grid">
               <label>{{ d.form.service_label }} <span aria-hidden="true">*</span>
@@ -209,6 +187,12 @@
               </label>
               <label class="full">{{ d.form.project_label }} <span aria-hidden="true">*</span>
                 <textarea name="project" id="request-project" rows="3" required maxlength="2000" placeholder="{{ d.form.project_placeholder }}"></textarea>
+              </label>
+              <label>{{ d.form.email_label }}
+                <input type="email" name="email" id="request-email" maxlength="100" autocomplete="email" placeholder="{{ d.form.email_placeholder }}">
+              </label>
+              <label>{{ d.form.phone_label }}
+                <input type="tel" name="phone" id="request-phone" maxlength="40" autocomplete="tel" placeholder="{{ d.form.phone_placeholder }}">
               </label>
               <label class="full">{{ d.form.name_label }} <span class="optional">{{ d.form.name_optional }}</span>
                 <input name="name" id="request-name" maxlength="100" autocomplete="name" placeholder="{{ d.form.name_placeholder }}">
@@ -237,21 +221,25 @@
   <footer class="site-footer">
     <div class="wrap">
       <div class="footer-top">
-        <a href="#inhalt" class="footer-brand">{{ d.brand.name }}<span>{{ d.footer.owner_line }}<br>{{ d.footer.trade_line }}</span></a>
+        <a href="#inhalt" class="footer-brand"><span class="wordmark footer-wordmark">{{ d.brand.name }}</span><span class="footer-copy">{{ d.footer.owner_line }}<br>{{ d.footer.trade_line }}</span></a>
         <div class="footer-links">
-          <a href="{{ d.contact.myhammer_profile }}" target="_blank" rel="noopener noreferrer">{{ d.footer.profile_label }} {% include icon.html name="arrow-ne" %}</a>
-          <button type="button" data-dialog="impressum">{{ d.footer.impressum_label }}</button>
-          <button type="button" data-dialog="datenschutz">{{ d.footer.datenschutz_label }}</button>
+          <div class="footer-link-block">
+            <a href="{{ d.contact.myhammer_profile }}" target="_blank" rel="noopener noreferrer">{{ d.footer.profile_label }} {% include icon.html name="arrow-ne" %}</a>
+            <small>{{ d.footer.profile_sub }}</small>
+          </div>
+          <div class="footer-link-block">
+            <button type="button" data-dialog="impressum">{{ d.footer.impressum_label }}</button>
+            <small>{% for line in d.footer.impressum_address %}{{ line }}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</small>
+          </div>
+          <div class="footer-link-block">
+            <button type="button" data-dialog="datenschutz">{{ d.footer.datenschutz_label }}</button>
+          </div>
         </div>
       </div>
       <div class="footer-contacts">
         <a href="{{ d.contact.phone_href }}">{{ d.contact.phone }}</a>
         <a href="mailto:{{ d.contact.email }}">{{ d.contact.email }}</a>
         <a href="{{ d.contact.website }}">{{ d.contact.website_label }}</a>
-      </div>
-      <div class="footer-bottom">
-        <span>{{ d.footer.note }}</span>
-        <span>{{ d.footer.media }} <a href="{{ d.contact.myhammer_source }}" target="_blank" rel="noopener noreferrer">{{ d.footer.source_label }}</a></span>
       </div>
     </div>
   </footer>
@@ -278,12 +266,7 @@
         "menu_open": {{ d.header.menu_open | jsonify }},
         "menu_close": {{ d.header.menu_close | jsonify }}
       },
-      "form": {{ d.form | jsonify }},
-      "regions": {
-        {% for region in d.area.regions %}
-        {{ region.id | jsonify }}: {{ region.answer | jsonify }}{% unless forloop.last %},{% endunless %}
-        {% endfor %}
-      }
+      "form": {{ d.form | jsonify }}
     }
   </script>
   <script src="{{ '/assets/js/site.js' | relative_url }}"></script>

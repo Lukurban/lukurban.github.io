@@ -78,17 +78,24 @@
       return;
     }
     const name = $('#request-name').value.trim();
+    const email = $('#request-email').value.trim();
+    const phone = $('#request-phone').value.trim();
     const L = cfg.form.letter;
+    const body = [
+      L.place_label + ' ' + place.value.trim(),
+      '',
+      L.project_label,
+      project.value.trim(),
+    ];
+    if (email) body.push('', L.email_label + ' ' + email);
+    if (phone) body.push('', L.phone_label + ' ' + phone);
     output.value = [
       L.greeting,
       '',
       L.intro,
       service.value,
       '',
-      L.place_label + ' ' + place.value.trim(),
-      '',
-      L.project_label,
-      project.value.trim(),
+      ...body,
       '',
       L.closing,
       '',
@@ -130,15 +137,6 @@
     setTimeout(() => URL.revokeObjectURL(url), 5000);
     toast(cfg.form.saved);
   });
-
-  $$('[data-region]').forEach((b) => b.addEventListener('click', () => {
-    const group = b.closest('.region-pills');
-    $$('button', group).forEach((c) => {
-      c.classList.toggle('active', b === c);
-      c.setAttribute('aria-pressed', String(b === c));
-    });
-    group.nextElementSibling.textContent = cfg.regions[b.dataset.region];
-  }));
 
   const legal = $('#legal-dialog');
   $$('[data-dialog]').forEach((b) => b.addEventListener('click', () => {
