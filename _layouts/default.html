@@ -177,10 +177,12 @@
             </div>
             <div class="form-grid">
               <label>{{ d.form.service_label }} <span aria-hidden="true">*</span>
-                <select name="service" id="request-service" required>
-                  <option value="" selected disabled>{{ d.form.service_placeholder }}</option>
-                  {% for option in d.form.options %}<option value="{{ option }}">{{ option }}</option>{% endfor %}
-                </select>
+                <span class="select-wrap" data-select-wrap>
+                  <select name="service" id="request-service" required>
+                    <option value="" selected disabled>{{ d.form.service_placeholder }}</option>
+                    {% for option in d.form.options %}<option value="{{ option }}">{{ option }}</option>{% endfor %}
+                  </select>
+                </span>
               </label>
               <label>{{ d.form.place_label }} <span aria-hidden="true">*</span>
                 <input name="place" id="request-place" required maxlength="100" autocomplete="address-level2" placeholder="{{ d.form.place_placeholder }}">
