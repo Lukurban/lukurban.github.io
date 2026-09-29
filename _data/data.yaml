@@ -78,7 +78,7 @@ services:
   request_label: Diese Leistung anfragen
   items:
     - number: "01 /"
-      title: Entrümpelung / Wohnungsauflösung
+      title: Wohnungsauflösung / Entrümpelung
       text: Einfamilienhäuser, Wohnungen, Keller, Dachboden, Garagen, Büro- und Gewerbeflächen, auch Messie-Wohnungen sowie Sperrmüllentsorgungen aller Art.
       request: Entrümpelung / Wohnungsauflösung
       icon: /service-clearance-line.png
