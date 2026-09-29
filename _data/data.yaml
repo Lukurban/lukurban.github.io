@@ -115,7 +115,6 @@ about:
   title:
     - Einer für die
     - schweren Sachen.
-  text: Ich bin Lukas Urbanek. Ich bin flexibel, packe gern an und stehe für einen ehrlichen Umgang. Für Ihr Vorhaben suche ich eine praktische Lösung – und bei Bedarf kombiniere ich mehrere Leistungen miteinander.
   more: Ohne Umwege direkt zum Ziel, gerne auch mit Sonderwünschen. Ich bin flexibel und kann gut anpacken und übe meine Tätigkeit mit Leidenschaft und Ehrlichkeit aus, die Zufriedenheit meiner Kunden steht an oberster Stelle. Bei mir sind Sie richtig, wenn es darum geht, Lösungen zu finden, um weiterzukommen.
 
 contact:
@@ -151,7 +150,6 @@ form:
   phone_label: Telefonnummer
   phone_placeholder: z. B. 0155 696 056 60
   name_label: Ihr Name
-  name_optional: (optional)
   name_placeholder: Vor- und Nachname
   hint: "* Pflichtfelder. Der Anfragetext wird nur in Ihrem Browser erstellt – es wird nichts automatisch gesendet oder dauerhaft gespeichert."
   submit: Anfrage versenden

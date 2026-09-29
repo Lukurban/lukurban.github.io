@@ -129,7 +129,6 @@
         <div>
           <span class="eyebrow">{{ d.about.eyebrow }}</span>
           <h2>{% for line in d.about.title %}{{ line }}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</h2>
-          <p>{{ d.about.text }}</p>
           <p>{{ d.about.more }}</p>
         </div>
       </div>
@@ -190,14 +189,14 @@
               <label class="full">{{ d.form.project_label }} <span aria-hidden="true">*</span>
                 <textarea name="project" id="request-project" rows="3" required maxlength="2000" placeholder="{{ d.form.project_placeholder }}"></textarea>
               </label>
-              <label>{{ d.form.email_label }}
-                <input type="email" name="email" id="request-email" maxlength="100" autocomplete="email" placeholder="{{ d.form.email_placeholder }}">
+              <label>{{ d.form.email_label }} <span aria-hidden="true">*</span>
+                <input type="email" name="email" id="request-email" required maxlength="100" autocomplete="email" placeholder="{{ d.form.email_placeholder }}">
               </label>
-              <label>{{ d.form.phone_label }}
-                <input type="tel" name="phone" id="request-phone" maxlength="40" autocomplete="tel" placeholder="{{ d.form.phone_placeholder }}">
+              <label>{{ d.form.phone_label }} <span aria-hidden="true">*</span>
+                <input type="tel" name="phone" id="request-phone" required maxlength="40" autocomplete="tel" placeholder="{{ d.form.phone_placeholder }}">
               </label>
-              <label class="full">{{ d.form.name_label }} <span class="optional">{{ d.form.name_optional }}</span>
-                <input name="name" id="request-name" maxlength="100" autocomplete="name" placeholder="{{ d.form.name_placeholder }}">
+              <label class="full">{{ d.form.name_label }} <span aria-hidden="true">*</span>
+                <input name="name" id="request-name" required maxlength="100" autocomplete="name" placeholder="{{ d.form.name_placeholder }}">
               </label>
             </div>
             <p class="form-hint">{{ d.form.hint }}</p>

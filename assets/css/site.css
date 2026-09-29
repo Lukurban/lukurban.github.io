@@ -464,10 +464,6 @@ button:disabled {
 .form-grid .full {
   grid-column: 1/-1;
 }
-.optional {
-  font-weight: 400;
-  opacity: 0.65;
-}
 input,
 select,
 textarea {
@@ -2908,6 +2904,7 @@ textarea:focus {
 .utility-about-mark {
   display: grid;
   place-items: center;
+  justify-content: center;
   min-height: 320px;
   padding: 32px;
   border: 0 !important;
@@ -2919,6 +2916,10 @@ textarea:focus {
   line-height: 1;
   color: var(--theme-accent) !important;
 }
+.utility-about-grid {
+  align-items: start;
+}
+
 
 /* Footer: same wordmark as the header, link blocks with sub-lines. */
 .footer-links {
@@ -2981,7 +2982,7 @@ textarea:focus {
 @media (min-width: 901px) {
   .utility-hero-art {
     background-size: auto 112%;
-    background-position: calc(100% + 10px) 46%;
+    background-position: calc(100% + 10px) 50%;
   }
   .utility-hero-copy {
     width: 56%;
