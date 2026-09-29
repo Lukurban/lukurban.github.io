@@ -2900,7 +2900,11 @@ textarea:focus {
   letter-spacing: 0.02em;
 }
 
-/* About: the framed mark becomes the L4U wordmark as in the header. */
+/* About: the framed mark becomes the L4U wordmark as in the header. The earlier
+   flex rule left `justify-content: space-between` behind, which in grid context
+   pins the single auto track to the start of the box, so the wordmark hugged
+   the left padding instead of centring. The copy column is top-aligned with
+   the square so the heading sits at the top of the section. */
 .utility-about-mark {
   display: grid;
   place-items: center;
@@ -2919,7 +2923,6 @@ textarea:focus {
 .utility-about-grid {
   align-items: start;
 }
-
 
 /* Footer: same wordmark as the header, link blocks with sub-lines. */
 .footer-links {
@@ -3242,4 +3245,40 @@ textarea:focus {
 }
 .select-option[aria-selected="true"] .select-check {
   display: inline-flex;
+}
+
+/* Review pass (2026-09-29): "the top picture should not blend into the
+   background but be bright like the one further down."
+   The hero photo was carrying three layers of suppression that the scope photo
+   below never had: a mask-image that dissolved its left 52% into the panel, a
+   two-axis ::before wash (up to 0.97 opaque horizontally, 0.82 at the top and
+   0.6 at the bottom), and a saturate(0.94) filter. None of it is needed for
+   legibility — the copy column ends before the photo begins, so the heading
+   never sat on top of the image in the first place. Dropping the suppression
+   leaves a hard-edged photo at native brightness, matching .scope-photo.
+
+   From 701px up the photo does reach under the copy column (it is 382px wide
+   in a 772px panel, so it starts 63px before the copy ends), which the old
+   mask used to hide by fading that strip to nothing. The copy column therefore
+   becomes an opaque panel of the same colour, so the photo is cut cleanly at
+   the column edge — the hard vertical division in the marked-up mockup. */
+.utility-hero-art {
+  -webkit-mask-image: none;
+  mask-image: none;
+  filter: none;
+}
+.utility-hero-art::before {
+  background: none;
+}
+@media (min-width: 701px) {
+  .utility-hero-copy {
+    background: var(--theme-panel);
+  }
+}
+@media (max-width: 700px) {
+  /* The photo is a band under the copy here, so it needs an edge of its own
+     now that it no longer fades in from the top and out at the bottom. */
+  .utility-hero-art {
+    border-top: 1px solid #ffffff2c;
+  }
 }
