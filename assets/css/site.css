@@ -3282,3 +3282,134 @@ textarea:focus {
     border-top: 1px solid #ffffff2c;
   }
 }
+
+/* Design pass (2026-09-29): the hero was still laid out as a full-bleed
+   background trick, so the portrait only ever painted a 461px strip on the
+   right of a 1220px panel — a ~200px void between the copy and the photo, and
+   a photo that pokes 10px past the wrap edge. Once the dissolve was gone that
+   read as a mistake rather than as depth.
+   The photo is now a real grid item, the same move the scope section already
+   makes: copy left, bounded image right. The box is 3/4, which is within 2% of
+   the source photo's own 0.735 aspect, so `cover` shows essentially the whole
+   frame — head to shoes — instead of slicing it. */
+@media (min-width: 701px) {
+  .utility-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 0.62fr;
+    align-items: stretch;
+    background: var(--theme-panel);
+  }
+  .utility-hero-copy {
+    width: auto;
+    min-height: 0;
+    align-self: center;
+    padding: 0 48px 0 40px;
+    background: none;
+  }
+  .utility-hero-art {
+    position: relative;
+    inset: auto;
+    align-self: stretch;
+    aspect-ratio: 3 / 4;
+    background-color: transparent;
+    background-size: cover;
+    background-position: 50% 50%;
+  }
+  .utility-hero-art::before {
+    display: none;
+  }
+}
+@media (max-width: 700px) {
+  /* Stacked below the copy, but the same 3/4 box so the framing matches. */
+  .utility-hero-art {
+    height: auto;
+    min-height: 0;
+    aspect-ratio: 3 / 4;
+    border-top: 0;
+    background-size: cover;
+    background-position: 50% 50%;
+  }
+}
+
+/* Design pass (2026-09-29), part 2: the service rows still carried the
+   two-column grid from when a tag list sat in the second track. With the tags
+   gone from the markup that track is empty, so every row had a 356px hole
+   under its icon and the body text was squeezed into the 1.2fr track. Single
+   track, and the head aligns to the top so the number, title and icon share
+   one line instead of the 128px icon dictating a centred title. */
+@media (min-width: 701px) {
+  .utility-service-content {
+    display: block;
+    max-width: 760px;
+  }
+  .utility-service .service-head {
+    align-items: start;
+  }
+  .utility-service .service-icon {
+    margin-top: -4px;
+  }
+}
+
+/* Design pass (2026-09-29), part 3: the about mark was 448x320 — a landscape
+   panel, though the brief calls it a square. A true 400x400 square with a
+   fixed column also hands the copy 740px instead of 672px. */
+@media (min-width: 701px) {
+  .utility-about-grid {
+    grid-template-columns: 400px minmax(0, 1fr);
+    gap: 80px;
+  }
+  .utility-about-mark {
+    width: 400px;
+    height: 400px;
+    min-height: 0;
+  }
+}
+
+/* Design pass (2026-09-29), part 4: top-aligning the head fixed the hole but
+   left a gap, because the 128px icon still set the head's height while the
+   title only fills 54px of it. The icon now floats against the whole row —
+   number and title on one line, body under the title, icon optically centred
+   on the right — which is both tighter and the usual editorial arrangement.
+   Rows drop from 364px to roughly 240px. */
+@media (min-width: 701px) {
+  .utility-service {
+    position: relative;
+    padding-right: 200px;
+  }
+  .utility-service .service-head {
+    grid-template-columns: 52px minmax(0, 1fr);
+    padding: 32px 0 18px;
+    align-items: start;
+  }
+  .utility-service .service-icon {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    width: 160px;
+    height: 104px;
+    margin-top: 0;
+    transform: translateY(-50%);
+  }
+  .utility-service-content {
+    display: block;
+    max-width: 700px;
+    padding-bottom: 32px;
+  }
+}
+
+/* Design pass (2026-09-29), part 5: between 901 and 1180 the copy column is
+   narrow enough that "Zuviel des Grünen?" broke after "des", giving the hero a
+   fourth line. Slightly smaller type in that band keeps the headline on the
+   three lines the copy asks for. */
+@media (min-width: 901px) and (max-width: 1180px) {
+  .hero-utility h1,
+  .hero-utility h1 span {
+    font-size: clamp(34px, 4.2vw, 45px);
+  }
+}
+@media (min-width: 901px) and (max-width: 1180px) {
+  /* A touch less inner padding buys the last headline line back its width. */
+  .utility-hero-copy {
+    padding-right: 32px;
+  }
+}
