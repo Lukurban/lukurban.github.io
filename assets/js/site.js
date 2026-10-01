@@ -171,6 +171,7 @@
 
   form.addEventListener('input', () => { result.hidden = true; });
   form.addEventListener('change', () => { result.hidden = true; });
+  const mailLink = $('#mail-request');
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!form.reportValidity()) return;
@@ -224,6 +225,25 @@
       behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
       block: 'center',
     });
+
+    /* Static hosting has no backend, so the request leaves the page through the
+       visitor's own mail client. The letter goes out as a draft; only the
+       visitor presses send. Longer texts are left to the copy/save buttons –
+       mail clients truncate very long bodies silently. */
+    const subject = cfg.form.mail_subject
+      .replace('{service}', service.value)
+      .replace('{place}', place.value.trim());
+    mailLink.href = 'mailto:' + cfg.contact.email
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(output.value);
+    if (output.value.length > cfg.form.mail_max) {
+      mailLink.hidden = true;
+      toast(cfg.form.mail_too_long);
+      return;
+    }
+    mailLink.hidden = false;
+    toast(cfg.form.mail_opened);
+    window.location.href = mailLink.href;
   });
 
   $('#copy-request').addEventListener('click', async () => {

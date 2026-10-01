@@ -3413,3 +3413,12 @@ textarea:focus {
     padding-right: 32px;
   }
 }
+
+/* An older light-panel theme left --bg pointing at a cream palette inside
+   .request-result, so .btn rendered light on light and the copy button in the
+   result card was unreadable. Re-point the card at the active theme, which
+   makes its buttons invert against the dark panel. */
+.utility-contact .request-result {
+  --bg: var(--theme-bg, #211d1e);
+  --ink: var(--theme-text, #f5f2ee);
+}

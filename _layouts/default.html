@@ -209,7 +209,8 @@
             <label for="request-text" class="sr-only">{{ d.form.result_label }}</label>
             <textarea id="request-text" readonly rows="9"></textarea>
             <div class="result-actions">
-              <button type="button" class="btn" id="copy-request">{{ d.form.copy }} {% include icon.html name="copy" %}</button>
+              <a class="btn" id="mail-request" href="mailto:{{ d.contact.email }}">{{ d.form.mail }} {% include icon.html name="mail" %}</a>
+              <button type="button" class="btn btn-outline" id="copy-request">{{ d.form.copy }} {% include icon.html name="copy" %}</button>
               <a class="btn btn-outline" href="{{ d.contact.myhammer_request }}" target="_blank" rel="noopener noreferrer">{{ d.form.open_myhammer }} {% include icon.html name="arrow-ne" %}</a>
               <button type="button" id="save-request" class="text-link">{{ d.form.save }} {% include icon.html name="download" %}</button>
             </div>
@@ -267,7 +268,8 @@
         "menu_open": {{ d.header.menu_open | jsonify }},
         "menu_close": {{ d.header.menu_close | jsonify }}
       },
-      "form": {{ d.form | jsonify }}
+      "form": {{ d.form | jsonify }},
+      "contact": { "email": {{ d.contact.email | jsonify }} }
     }
   </script>
   <script src="{{ '/assets/js/site.js' | relative_url }}"></script>

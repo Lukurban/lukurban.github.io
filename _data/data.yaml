@@ -151,19 +151,24 @@ form:
   phone_placeholder: z. B. 0155 696 056 60
   name_label: Ihr Name
   name_placeholder: Vor- und Nachname
-  hint: "* Pflichtfelder. Der Anfragetext wird nur in Ihrem Browser erstellt – es wird nichts automatisch gesendet oder dauerhaft gespeichert."
-  submit: Anfrage versenden
+  hint: "* Pflichtfelder. Die Anfrage öffnet sich in Ihrem E-Mail-Programm als Entwurf – abgeschickt wird sie erst dort. Auf dieser Website wird nichts gespeichert."
+  submit: Anfrage per E-Mail senden
   options:
     - Entrümpelung / Wohnungsauflösung
     - Warentransport
     - Gartenpflege
     - Mehrere Leistungen
-  result_eyebrow: VORLAGE ERSTELLT
+  result_eyebrow: ANFRAGE VORBEREITET
   result_title: Bereit für den nächsten Schritt.
-  result_text_before: "Ihre Anfrage ist vorbereitet, aber "
-  result_text_strong: noch nicht gesendet
-  result_text_after: ". Kopieren Sie den Text und fügen Sie ihn bei MyHammer in Ihre Anfrage ein."
+  result_text_before: "Ihre Anfrage ist vorbereitet – "
+  result_text_strong: absenden müssen Sie sie selbst
+  result_text_after: ". Prüfen Sie den Text in Ihrem E-Mail-Programm und drücken Sie dort auf Senden. Alternativ fügen Sie ihn bei MyHammer in Ihre Anfrage ein."
   result_label: Vorbereiteter Anfragetext
+  mail: Anfrage per E-Mail senden
+  mail_subject: "Projektanfrage {service} – {place}"
+  mail_opened: Anfrage an Ihr E-Mail-Programm übergeben. Bitte dort prüfen und absenden.
+  mail_too_long: Zu lang für den direkten Versand. Bitte den Text kopieren und selbst einfügen.
+  mail_max: 1800
   copy: Text kopieren
   open_myhammer: MyHammer öffnen
   save: Als Textdatei speichern
@@ -201,7 +206,8 @@ legal:
     title: Datenschutz
     paragraphs:
       - Diese Website lädt keine externen Schriften, Bilder, Analyse- oder Kartendienste. Die Formularangaben bleiben im Arbeitsspeicher dieser Seite. Sie werden nicht automatisch übermittelt und nicht dauerhaft gespeichert.
-      - Nur auf Ihren Klick kann der Anfragetext in die Zwischenablage kopiert oder als lokale Datei gespeichert werden. Externe MyHammer-Links verlassen diese Website.
+      - Beim Absenden des Formulars wird die vorbereitete Nachricht an das E-Mail-Programm Ihres Geräts übergeben und dort als Entwurf geöffnet. Übertragen wird sie erst, wenn Sie die Nachricht in diesem Programm absenden. Der Anfragetext kann zusätzlich in die Zwischenablage kopiert oder als lokale Datei gespeichert werden.
+      - Externe MyHammer-Links verlassen diese Website.
       - Eine vollständige Datenschutzerklärung wird ergänzt, sobald Hosting und Kontaktwege final feststehen.
 
 footer:
