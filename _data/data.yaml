@@ -151,23 +151,31 @@ form:
   phone_placeholder: z. B. 0155 696 056 60
   name_label: Ihr Name
   name_placeholder: Vor- und Nachname
-  hint: "* Pflichtfelder. Die Anfrage öffnet sich in Ihrem E-Mail-Programm als Entwurf – abgeschickt wird sie erst dort. Auf dieser Website wird nichts gespeichert."
-  submit: Anfrage per E-Mail senden
+  hint: "* Pflichtfelder. Die Anfrage wird direkt an Lukas Urbanek gesendet – eine Kopie geht automatisch an Ihre E-Mail-Adresse. Auf dieser Website wird nichts gespeichert."
+  submit: Anfrage senden
+  endpoint: https://formsubmit.co/ajax/lukas.urbanek@transportundgarten.de
+  sending: Wird gesendet …
   options:
     - Entrümpelung / Wohnungsauflösung
     - Warentransport
     - Gartenpflege
     - Mehrere Leistungen
-  result_eyebrow: ANFRAGE VORBEREITET
-  result_title: Bereit für den nächsten Schritt.
-  result_text_before: "Ihre Anfrage ist vorbereitet – "
-  result_text_strong: absenden müssen Sie sie selbst
-  result_text_after: ". Prüfen Sie den Text in Ihrem E-Mail-Programm und drücken Sie dort auf Senden. Alternativ fügen Sie ihn bei MyHammer in Ihre Anfrage ein."
-  result_label: Vorbereiteter Anfragetext
-  mail: Anfrage per E-Mail senden
+  sent_eyebrow: ANFRAGE GESENDET
+  sent_title: Danke! Ihre Anfrage ist unterwegs.
+  sent_text_before: "Sie wurde direkt an Lukas Urbanek übermittelt – eine Kopie geht an "
+  sent_text_strong: Ihre E-Mail-Adresse
+  sent_text_after: ". Den Anfragetext unten können Sie als Beleg kopieren oder speichern."
+  sent_toast: "Anfrage gesendet. Eine Kopie geht an Ihre E-Mail-Adresse."
+  failed_eyebrow: SENDEN FEHLGESCHLAGEN
+  failed_title: Da hat etwas nicht geklappt.
+  failed_text_before: "Die Anfrage konnte nicht gesendet werden – "
+  failed_text_strong: bitte den Text unten kopieren
+  failed_text_after: " und ihn per E-Mail an Lukas Urbanek schicken. Oder Sie versuchen es später erneut."
+  failed_toast: Senden fehlgeschlagen. Bitte den Text kopieren und selbst senden.
+  result_label: Anfragetext
+  mail: Text per E-Mail senden
   mail_subject: "Projektanfrage {service} – {place}"
-  mail_opened: Anfrage an Ihr E-Mail-Programm übergeben. Bitte dort prüfen und absenden.
-  mail_too_long: Zu lang für den direkten Versand. Bitte den Text kopieren und selbst einfügen.
+  mail_too_long: Zu lang für den E-Mail-Entwurf. Bitte den Text kopieren und selbst einfügen.
   mail_max: 1800
   copy: Text kopieren
   open_myhammer: MyHammer öffnen
@@ -205,8 +213,8 @@ legal:
     eyebrow: HINWEIS
     title: Datenschutz
     paragraphs:
-      - Diese Website lädt keine externen Schriften, Bilder, Analyse- oder Kartendienste. Die Formularangaben bleiben im Arbeitsspeicher dieser Seite. Sie werden nicht automatisch übermittelt und nicht dauerhaft gespeichert.
-      - Beim Absenden des Formulars wird die vorbereitete Nachricht an das E-Mail-Programm Ihres Geräts übergeben und dort als Entwurf geöffnet. Übertragen wird sie erst, wenn Sie die Nachricht in diesem Programm absenden. Der Anfragetext kann zusätzlich in die Zwischenablage kopiert oder als lokale Datei gespeichert werden.
+      - Diese Website lädt keine externen Schriften, Bilder, Analyse- oder Kartendienste. Die Formularangaben werden ausschließlich zum Versand Ihrer Anfrage genutzt und auf dieser Website nicht dauerhaft gespeichert.
+      - Beim Absenden werden die Formularangaben über einen Formular-Dienst (formsubmit.co) verschlüsselt an die E-Mail-Adresse des Betreibers übermittelt. Eine Kopie der Anfrage geht an die im Formular angegebene E-Mail-Adresse. Der Anfragetext kann zusätzlich in die Zwischenablage kopiert oder als lokale Datei gespeichert werden.
       - Externe MyHammer-Links verlassen diese Website.
       - Eine vollständige Datenschutzerklärung wird ergänzt, sobald Hosting und Kontaktwege final feststehen.
 

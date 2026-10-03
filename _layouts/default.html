@@ -203,13 +203,13 @@
             <button class="btn submit-btn" type="submit">{{ d.form.submit }} {% include icon.html name="arrow-right" %}</button>
           </form>
           <section id="request-result" class="request-result" aria-live="polite" tabindex="-1" hidden>
-            <span class="eyebrow">{{ d.form.result_eyebrow }}</span>
-            <h3>{{ d.form.result_title }}</h3>
-            <p>{{ d.form.result_text_before }}<strong>{{ d.form.result_text_strong }}</strong>{{ d.form.result_text_after }}</p>
+            <span class="eyebrow" id="result-eyebrow">{{ d.form.sent_eyebrow }}</span>
+            <h3 id="result-title">{{ d.form.sent_title }}</h3>
+            <p><span id="result-text-before">{{ d.form.sent_text_before }}</span><strong id="result-text-strong">{{ d.form.sent_text_strong }}</strong><span id="result-text-after">{{ d.form.sent_text_after }}</span></p>
             <label for="request-text" class="sr-only">{{ d.form.result_label }}</label>
             <textarea id="request-text" readonly rows="9"></textarea>
             <div class="result-actions">
-              <a class="btn" id="mail-request" href="mailto:{{ d.contact.email }}">{{ d.form.mail }} {% include icon.html name="mail" %}</a>
+              <a class="btn" id="mail-request" href="mailto:{{ d.contact.email }}" hidden>{{ d.form.mail }} {% include icon.html name="mail" %}</a>
               <button type="button" class="btn btn-outline" id="copy-request">{{ d.form.copy }} {% include icon.html name="copy" %}</button>
               <a class="btn btn-outline" href="{{ d.contact.myhammer_request }}" target="_blank" rel="noopener noreferrer">{{ d.form.open_myhammer }} {% include icon.html name="arrow-ne" %}</a>
               <button type="button" id="save-request" class="text-link">{{ d.form.save }} {% include icon.html name="download" %}</button>

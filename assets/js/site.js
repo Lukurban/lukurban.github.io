@@ -45,6 +45,30 @@
   const service = $('#request-service');
   const result = $('#request-result');
   const output = $('#request-text');
+  const mailLink = $('#mail-request');
+  const submitBtn = $('.submit-btn', form);
+  const resultTexts = {
+    eyebrow: $('#result-eyebrow'),
+    title: $('#result-title'),
+    before: $('#result-text-before'),
+    strong: $('#result-text-strong'),
+    after: $('#result-text-after'),
+  };
+  function showResult(sent) {
+    result.classList.toggle('is-error', !sent);
+    resultTexts.eyebrow.textContent = sent ? cfg.form.sent_eyebrow : cfg.form.failed_eyebrow;
+    resultTexts.title.textContent = sent ? cfg.form.sent_title : cfg.form.failed_title;
+    resultTexts.before.textContent = sent ? cfg.form.sent_text_before : cfg.form.failed_text_before;
+    resultTexts.strong.textContent = sent ? cfg.form.sent_text_strong : cfg.form.failed_text_strong;
+    resultTexts.after.textContent = sent ? cfg.form.sent_text_after : cfg.form.failed_text_after;
+    mailLink.hidden = sent;
+    result.hidden = false;
+    result.focus({ preventScroll: true });
+    result.scrollIntoView({
+      behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+      block: 'center',
+    });
+  }
 
   function selectService(value, scroll = true) {
     service.value = value;
@@ -171,8 +195,7 @@
 
   form.addEventListener('input', () => { result.hidden = true; });
   form.addEventListener('change', () => { result.hidden = true; });
-  const mailLink = $('#mail-request');
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!form.reportValidity()) return;
     if (!service.value) {
@@ -219,31 +242,60 @@
       '',
       L.regards + (name ? '\n' + name : ''),
     ].join('\n');
-    result.hidden = false;
-    result.focus({ preventScroll: true });
-    result.scrollIntoView({
-      behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
-      block: 'center',
-    });
 
-    /* Static hosting has no backend, so the request leaves the page through the
-       visitor's own mail client. The letter goes out as a draft; only the
-       visitor presses send. Longer texts are left to the copy/save buttons –
-       mail clients truncate very long bodies silently. */
     const subject = cfg.form.mail_subject
       .replace('{service}', service.value)
       .replace('{place}', place.value.trim());
-    mailLink.href = 'mailto:' + cfg.contact.email
-      + '?subject=' + encodeURIComponent(subject)
-      + '&body=' + encodeURIComponent(output.value);
-    if (output.value.length > cfg.form.mail_max) {
+
+    /* Static hosting has no backend, so the request is relayed through
+       FormSubmit: one HTTPS request with UTF-8 JSON, so umlauts survive any
+       mail client. The owner receives the request directly and the visitor
+       is put in CC. The field named "email" makes FormSubmit set Reply-To. */
+    const payload = {
+      _subject: subject,
+      _template: 'table',
+      _captcha: 'false',
+      _honey: '',
+      _cc: email,
+      Leistung: service.value,
+      Einsatzort: place.value.trim(),
+      Vorhaben: project.value.trim(),
+      Name: name,
+      email: email,
+      Telefon: phone,
+      Nachricht: output.value,
+    };
+
+    submitBtn.disabled = true;
+    const label = submitBtn.innerHTML;
+    submitBtn.innerHTML = '<span>' + cfg.form.sending + '</span>';
+    try {
+      const res = await fetch(cfg.form.endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || String(data.success).toLowerCase() !== 'true') {
+        throw new Error(data.message || 'HTTP ' + res.status);
+      }
       mailLink.hidden = true;
-      toast(cfg.form.mail_too_long);
-      return;
+      toast(cfg.form.sent_toast);
+      showResult(true);
+    } catch (err) {
+      /* Fallback: hand the letter to the visitor's own mail client instead.
+         Longer texts are left to the copy/save buttons – mail clients
+         truncate very long bodies silently. */
+      mailLink.href = 'mailto:' + cfg.contact.email
+        + '?subject=' + encodeURIComponent(subject)
+        + '&body=' + encodeURIComponent(output.value);
+      mailLink.hidden = output.value.length > cfg.form.mail_max;
+      toast(cfg.form.failed_toast);
+      showResult(false);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = label;
     }
-    mailLink.hidden = false;
-    toast(cfg.form.mail_opened);
-    window.location.href = mailLink.href;
   });
 
   $('#copy-request').addEventListener('click', async () => {
