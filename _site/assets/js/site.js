@@ -1,0 +1,390 @@
+(() => {
+  'use strict';
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
+  const cfg = JSON.parse($('#site-runtime').textContent);
+
+  let toastTimer;
+  function toast(message) {
+    const t = $('#toast');
+    t.textContent = message;
+    t.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { t.hidden = true; }, 4200);
+  }
+
+  const menu = $('.menu-toggle');
+  const nav = $('#mobile-nav');
+  function closeMenu() {
+    nav.hidden = true;
+    menu.setAttribute('aria-expanded', 'false');
+    menu.setAttribute('aria-label', cfg.header.menu_open);
+  }
+  menu.addEventListener('click', () => {
+    const open = menu.getAttribute('aria-expanded') === 'true';
+    nav.hidden = open;
+    menu.setAttribute('aria-expanded', String(!open));
+    menu.setAttribute('aria-label', open ? cfg.header.menu_open : cfg.header.menu_close);
+  });
+  $$('a', nav).forEach((a) => a.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMenu(); });
+  window.addEventListener('resize', () => { if (innerWidth > 700) closeMenu(); });
+
+  $$('a[href^="#"]').forEach((a) => a.addEventListener('click', (e) => {
+    const t = document.getElementById(a.getAttribute('href').slice(1));
+    if (t) {
+      e.preventDefault();
+      t.scrollIntoView({
+        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+        block: 'start',
+      });
+    }
+  }));
+
+  const form = $('#contact-form');
+  const service = $('#request-service');
+  const result = $('#request-result');
+  const output = $('#request-text');
+  const mailLink = $('#mail-request');
+  const submitBtn = $('.submit-btn', form);
+  const hpField = $('#request-company');
+  const inboxUrl = String(cfg.form.inbox_url || '').trim();
+  const resultTexts = {
+    eyebrow: $('#result-eyebrow'),
+    title: $('#result-title'),
+    before: $('#result-text-before'),
+    strong: $('#result-text-strong'),
+    after: $('#result-text-after'),
+  };
+  function showResult(sent) {
+    result.classList.toggle('is-error', !sent);
+    resultTexts.eyebrow.textContent = sent ? cfg.form.sent_eyebrow : cfg.form.failed_eyebrow;
+    resultTexts.title.textContent = sent ? cfg.form.sent_title : cfg.form.failed_title;
+    resultTexts.before.textContent = sent ? cfg.form.sent_text_before : cfg.form.failed_text_before;
+    resultTexts.strong.textContent = sent ? cfg.form.sent_text_strong : cfg.form.failed_text_strong;
+    resultTexts.after.textContent = sent ? cfg.form.sent_text_after : cfg.form.failed_text_after;
+    mailLink.hidden = false;
+    result.hidden = false;
+    result.focus({ preventScroll: true });
+    result.scrollIntoView({
+      behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+      block: 'center',
+    });
+  }
+
+  function showInboxResult() {
+    result.classList.remove('is-error');
+    resultTexts.eyebrow.textContent = cfg.form.inbox_sent_eyebrow;
+    resultTexts.title.textContent = cfg.form.inbox_sent_title;
+    resultTexts.before.textContent = cfg.form.inbox_sent_text_before;
+    resultTexts.strong.textContent = cfg.form.inbox_sent_text_strong;
+    resultTexts.after.textContent = cfg.form.inbox_sent_text_after;
+    mailLink.hidden = true;
+    result.hidden = false;
+    result.focus({ preventScroll: true });
+    result.scrollIntoView({
+      behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+      block: 'center',
+    });
+  }
+
+  function selectService(value, scroll = true) {
+    service.value = value;
+    syncServiceSelect();
+    result.hidden = true;
+    if (scroll) {
+      $('#kontakt').scrollIntoView({
+        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+        block: 'start',
+      });
+    }
+  }
+  $$('[data-request]').forEach((b) => b.addEventListener('click', () => selectService(b.dataset.request)));
+
+  /* The native select popup cannot be styled to match the dark theme, so the
+     select is enhanced into a themed listbox. Without JS the native select
+     keeps working untouched. */
+  const selectWrap = service.closest('[data-select-wrap]');
+  const serviceSelectUi = { sync() {}, toggle: null, markInvalid() {} };
+  function syncServiceSelect() { serviceSelectUi.sync(); }
+
+  if (selectWrap) {
+    service.required = false;
+    service.hidden = true;
+    const CHEVRON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 9 7 7 7-7"/></svg>';
+    const CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4.5 12.5 5 5 10-11"/></svg>';
+    const fieldLabel = service.closest('label');
+    const toggle = document.createElement('button');
+    toggle.type = 'button';
+    toggle.className = 'select-toggle is-placeholder';
+    toggle.setAttribute('aria-haspopup', 'listbox');
+    toggle.setAttribute('aria-expanded', 'false');
+    toggle.setAttribute('aria-controls', 'request-service-list');
+    toggle.innerHTML = '<span class="select-value"></span><span class="select-chevron">' + CHEVRON + '</span>';
+    const list = document.createElement('ul');
+    list.className = 'select-list';
+    list.id = 'request-service-list';
+    list.setAttribute('role', 'listbox');
+    list.hidden = true;
+    selectWrap.append(toggle, list);
+
+    const items = $$('option', service).filter((o) => o.value).map((o, i) => {
+      const li = document.createElement('li');
+      li.id = 'request-service-opt-' + i;
+      li.className = 'select-option';
+      li.setAttribute('role', 'option');
+      li.setAttribute('aria-selected', 'false');
+      li.dataset.value = o.value;
+      li.innerHTML = '<span class="select-option-label">' + o.textContent + '</span><span class="select-check">' + CHECK + '</span>';
+      list.append(li);
+      return li;
+    });
+    const placeholderText = ($('option[value=""]', service) || {}).textContent || '';
+
+    let activeIndex = -1;
+    function setActive(i) {
+      activeIndex = (i + items.length) % items.length;
+      items.forEach((li, j) => li.classList.toggle('is-active', j === activeIndex));
+      list.setAttribute('aria-activedescendant', items[activeIndex].id);
+      items[activeIndex].scrollIntoView({ block: 'nearest' });
+    }
+    function open() {
+      list.hidden = false;
+      toggle.setAttribute('aria-expanded', 'true');
+      const current = items.findIndex((li) => li.dataset.value === service.value);
+      setActive(current >= 0 ? current : 0);
+    }
+    function close(refocus = true) {
+      list.hidden = true;
+      toggle.setAttribute('aria-expanded', 'false');
+      if (refocus) toggle.focus();
+    }
+    function sync() {
+      toggle.classList.toggle('is-placeholder', !service.value);
+      toggle.querySelector('.select-value').textContent = service.value || placeholderText;
+      items.forEach((li) => li.setAttribute('aria-selected', String(li.dataset.value === service.value)));
+      toggle.classList.remove('is-invalid');
+    }
+    function choose(li) {
+      service.value = li.dataset.value;
+      sync();
+      service.dispatchEvent(new Event('change', { bubbles: true }));
+      close();
+    }
+
+    toggle.addEventListener('click', () => (list.hidden ? open() : close(false)));
+    toggle.addEventListener('keydown', (e) => {
+      if (list.hidden) {
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          open();
+          setActive(e.key === 'ArrowDown' ? 0 : items.length - 1);
+        }
+        return;
+      }
+      if (e.key === 'ArrowDown') { e.preventDefault(); setActive(activeIndex + 1); }
+      else if (e.key === 'ArrowUp') { e.preventDefault(); setActive(activeIndex - 1); }
+      else if (e.key === 'Home') { e.preventDefault(); setActive(0); }
+      else if (e.key === 'End') { e.preventDefault(); setActive(items.length - 1); }
+      else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choose(items[activeIndex]); }
+      else if (e.key === 'Escape') { e.preventDefault(); close(); }
+      else if (e.key === 'Tab') close(false);
+    });
+    list.addEventListener('click', (e) => {
+      const li = e.target.closest('.select-option');
+      if (li) choose(li);
+    });
+    list.addEventListener('mouseover', (e) => {
+      const li = e.target.closest('.select-option');
+      if (li) setActive(items.indexOf(li));
+    });
+    document.addEventListener('pointerdown', (e) => {
+      if (!list.hidden && !selectWrap.contains(e.target)) close(false);
+    });
+    if (fieldLabel) fieldLabel.addEventListener('click', (e) => {
+      if (!selectWrap.contains(e.target)) { e.preventDefault(); toggle.focus(); }
+    });
+
+    serviceSelectUi.sync = sync;
+    serviceSelectUi.toggle = toggle;
+    serviceSelectUi.markInvalid = () => toggle.classList.add('is-invalid');
+    sync();
+  }
+
+  form.addEventListener('input', () => { result.hidden = true; });
+  form.addEventListener('change', () => { result.hidden = true; });
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    if (!service.value) {
+      serviceSelectUi.sync();
+      serviceSelectUi.markInvalid();
+      if (serviceSelectUi.toggle) serviceSelectUi.toggle.focus();
+      return;
+    }
+    const place = $('#request-place');
+    const project = $('#request-project');
+    if (!place.value.trim()) {
+      place.setCustomValidity(cfg.form.place_error);
+      place.reportValidity();
+      place.addEventListener('input', () => place.setCustomValidity(''), { once: true });
+      return;
+    }
+    if (!project.value.trim()) {
+      project.setCustomValidity(cfg.form.project_error);
+      project.reportValidity();
+      project.addEventListener('input', () => project.setCustomValidity(''), { once: true });
+      return;
+    }
+    const name = $('#request-name').value.trim();
+    const email = $('#request-email').value.trim();
+    const phone = $('#request-phone').value.trim();
+    const L = cfg.form.letter;
+    const body = [
+      L.place_label + ' ' + place.value.trim(),
+      '',
+      L.project_label,
+      project.value.trim(),
+    ];
+    if (email) body.push('', L.email_label + ' ' + email);
+    if (phone) body.push('', L.phone_label + ' ' + phone);
+    output.value = [
+      L.greeting,
+      '',
+      L.intro,
+      service.value,
+      '',
+      ...body,
+      '',
+      L.closing,
+      '',
+      L.regards + (name ? '\n' + name : ''),
+    ].join('\n');
+
+    const subject = cfg.form.mail_subject
+      .replace('{service}', service.value)
+      .replace('{place}', place.value.trim());
+
+    if (!inboxUrl) {
+      finishViaMailClient(subject);
+      return;
+    }
+
+    /* Honeypot: humans never see the field (CSS parks it off-screen), so a
+       filled one marks a bot — feign success and drop the request. */
+    if (hpField && hpField.value) {
+      showInboxResult();
+      toast(cfg.form.inbox_sent_toast);
+      return;
+    }
+
+    /* Apps Script answers through a redirect that no-cors keeps opaque, so
+       success is assumed whenever the request completes inside the timeout;
+       any network failure falls back to the mail client. */
+    const payload = {
+      service: service.value,
+      place: place.value.trim(),
+      project: project.value.trim(),
+      email: email,
+      phone: phone,
+      name: name,
+      company: hpField ? hpField.value : '',
+      page: location.href,
+    };
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), Number(cfg.form.inbox_timeout) || 12000);
+    submitBtn.disabled = true;
+    toast(cfg.form.inbox_sending);
+    try {
+      await fetch(inboxUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+        body: new URLSearchParams(payload).toString(),
+        signal: ctrl.signal,
+      });
+      showInboxResult();
+      toast(cfg.form.inbox_sent_toast);
+    } catch (err) {
+      finishViaMailClient(subject, cfg.form.inbox_fallback_toast);
+    } finally {
+      clearTimeout(timer);
+      submitBtn.disabled = false;
+    }
+  });
+
+  /* Static hosting has no backend, and form relays are a dead end here:
+     their sign-up/activation mails never reached the owner's inbox. The
+     finished letter is therefore handed to the visitor's own mail client
+     via mailto: — delivery rides on the visitor's mail provider, no third
+     party involved. encodeURIComponent percent-encodes as UTF-8, which
+     every current mail program decodes, so umlauts and ß survive. Also
+     serves as the fallback when the inbox POST fails. */
+  function finishViaMailClient(subject, note) {
+    /* Overlong mailto: URLs get truncated by some mail clients; for those,
+       copy/save in the result panel are the way out. */
+    if (output.value.length > cfg.form.mail_max) {
+      toast(cfg.form.mail_too_long);
+      showResult(false);
+      mailLink.hidden = true;
+      return;
+    }
+    const mailto = 'mailto:' + cfg.contact.email
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(output.value);
+    mailLink.href = mailto;
+    showResult(true);
+    toast(note || cfg.form.sent_toast);
+    /* Hand off through an anchor click, like a real link — protocol handlers
+       ignore navigations started elsewhere. The page stays open, so the
+       receipt panel remains visible. */
+    const opener = document.createElement('a');
+    opener.href = mailto;
+    document.body.appendChild(opener);
+    opener.click();
+    opener.remove();
+  }
+
+  $('#copy-request').addEventListener('click', async () => {
+    let copied = false;
+    try {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(output.value);
+        copied = true;
+      }
+    } catch (err) { /* fall through to execCommand */ }
+    if (!copied) {
+      output.focus();
+      output.select();
+      try { copied = document.execCommand('copy'); } catch (err) { copied = false; }
+    }
+    toast(copied ? cfg.form.copied : cfg.form.copy_fallback);
+  });
+
+  $('#save-request').addEventListener('click', () => {
+    const blob = new Blob([output.value], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = cfg.form.filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 5000);
+    toast(cfg.form.saved);
+  });
+
+  const legal = $('#legal-dialog');
+  $$('[data-dialog]').forEach((b) => b.addEventListener('click', () => {
+    const tpl = $('#legal-' + b.dataset.dialog);
+    $('#legal-content').innerHTML = tpl ? tpl.innerHTML : '';
+    legal.showModal();
+  }));
+  $('.dialog-close', legal).addEventListener('click', () => legal.close());
+  legal.addEventListener('click', (e) => {
+    if (e.target === legal) {
+      const r = legal.getBoundingClientRect();
+      if (e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom) legal.close();
+    }
+  });
+})();
