@@ -46,8 +46,6 @@
   const result = $('#request-result');
   const output = $('#request-text');
   const mailLink = $('#mail-request');
-  const submitBtn = $('.submit-btn', form);
-  const SENT_PARAM = 'gesendet';
   const resultTexts = {
     eyebrow: $('#result-eyebrow'),
     title: $('#result-title'),
@@ -62,7 +60,7 @@
     resultTexts.before.textContent = sent ? cfg.form.sent_text_before : cfg.form.failed_text_before;
     resultTexts.strong.textContent = sent ? cfg.form.sent_text_strong : cfg.form.failed_text_strong;
     resultTexts.after.textContent = sent ? cfg.form.sent_text_after : cfg.form.failed_text_after;
-    mailLink.hidden = sent;
+    mailLink.hidden = false;
     result.hidden = false;
     result.focus({ preventScroll: true });
     result.scrollIntoView({
@@ -248,80 +246,37 @@
       .replace('{service}', service.value)
       .replace('{place}', place.value.trim());
 
-    /* Static hosting has no backend, so the request is relayed through
-       FormSubmit. A regular top-level form POST, not fetch: FormSubmit sits
-       behind a Cloudflare challenge that answers cross-origin AJAX calls
-       (and their CORS preflight) with a 403, so fetch never reached it and
-       no request or activation mail was ever sent. A navigation passes the
-       challenge in the visitor's browser. FormSubmit mails the owner, puts
-       the visitor in CC, sets Reply-To from the "email" field and returns
-       to _next, where the sent state is restored from sessionStorage. */
-    const payload = {
-      _subject: subject,
-      _template: 'table',
-      _captcha: 'false',
-      _next: location.origin + location.pathname + '?' + SENT_PARAM + '#kontakt',
-      _cc: email,
-      Leistung: service.value,
-      Einsatzort: place.value.trim(),
-      Vorhaben: project.value.trim(),
-      Name: name,
-      email: email,
-      Telefon: phone,
-      Nachricht: output.value,
-    };
+    /* Static hosting has no backend, and form relays are a dead end here:
+       their sign-up/activation mails never reached the owner's inbox. The
+       finished letter is therefore handed to the visitor's own mail client
+       via mailto: — delivery rides on the visitor's mail provider, no third
+       party involved. encodeURIComponent percent-encodes as UTF-8, which
+       every current mail program decodes, so umlauts and ß survive. */
+    const mailto = 'mailto:' + cfg.contact.email
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(output.value);
+    mailLink.href = mailto;
 
-    const relay = document.createElement('form');
-    relay.method = 'POST';
-    relay.action = cfg.form.endpoint;
-    relay.acceptCharset = 'UTF-8';
-    relay.hidden = true;
-    Object.entries({ ...payload, _honey: '' }).forEach(([key, value]) => {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = key;
-      input.value = value;
-      relay.appendChild(input);
-    });
-    document.body.appendChild(relay);
-    try { sessionStorage.setItem(SENT_PARAM, output.value); } catch (err) { /* private mode */ }
-    submitBtn.disabled = true;
-    const label = submitBtn.innerHTML;
-    submitBtn.innerHTML = '<span>' + cfg.form.sending + '</span>';
-    relay.submit();
-
-    /* A successful navigation unloads this document, so this watchdog only
-       ever fires when something on the visitor's machine stopped it:
-       ad-blockers, antivirus web-shields and network filters keep
-       formsubmit.co on their blocklists (it shows up there as
-       [*]https://formsubmit.co/...). Hand the letter to the visitor's own
-       mail client instead of leaving a dead button. */
-    setTimeout(() => {
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = label;
-      mailLink.href = 'mailto:' + cfg.contact.email
-        + '?subject=' + encodeURIComponent(subject)
-        + '&body=' + encodeURIComponent(output.value);
-      toast(cfg.form.failed_toast);
+    /* Overlong mailto: URLs get truncated by some mail clients; for those,
+       copy/save in the result panel are the way out. */
+    if (output.value.length > cfg.form.mail_max) {
+      toast(cfg.form.mail_too_long);
       showResult(false);
-      /* showResult unconditionally reveals the mail link; hide it again for
-         letters a mail client would truncate – copy/save stay available. */
-      mailLink.hidden = output.value.length > cfg.form.mail_max;
-    }, 10000);
-  });
+      mailLink.hidden = true;
+      return;
+    }
 
-  /* Back from FormSubmit: show the sent state with the letter as receipt. */
-  if (new URLSearchParams(location.search).has(SENT_PARAM)) {
-    let letter = '';
-    try {
-      letter = sessionStorage.getItem(SENT_PARAM) || '';
-      sessionStorage.removeItem(SENT_PARAM);
-    } catch (err) { /* private mode */ }
-    history.replaceState(null, '', location.pathname + '#kontakt');
-    output.value = letter;
-    toast(cfg.form.sent_toast);
     showResult(true);
-  }
+    toast(cfg.form.sent_toast);
+    /* Hand off through an anchor click inside the submit event, like a real
+       link — protocol handlers ignore navigations started elsewhere. The
+       page stays open, so the receipt panel remains visible. */
+    const opener = document.createElement('a');
+    opener.href = mailto;
+    document.body.appendChild(opener);
+    opener.click();
+    opener.remove();
+  });
 
   $('#copy-request').addEventListener('click', async () => {
     let copied = false;
