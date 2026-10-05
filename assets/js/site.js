@@ -286,8 +286,28 @@
     document.body.appendChild(relay);
     try { sessionStorage.setItem(SENT_PARAM, output.value); } catch (err) { /* private mode */ }
     submitBtn.disabled = true;
+    const label = submitBtn.innerHTML;
     submitBtn.innerHTML = '<span>' + cfg.form.sending + '</span>';
     relay.submit();
+
+    /* A successful navigation unloads this document, so this watchdog only
+       ever fires when something on the visitor's machine stopped it:
+       ad-blockers, antivirus web-shields and network filters keep
+       formsubmit.co on their blocklists (it shows up there as
+       [*]https://formsubmit.co/...). Hand the letter to the visitor's own
+       mail client instead of leaving a dead button. */
+    setTimeout(() => {
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = label;
+      mailLink.href = 'mailto:' + cfg.contact.email
+        + '?subject=' + encodeURIComponent(subject)
+        + '&body=' + encodeURIComponent(output.value);
+      toast(cfg.form.failed_toast);
+      showResult(false);
+      /* showResult unconditionally reveals the mail link; hide it again for
+         letters a mail client would truncate – copy/save stay available. */
+      mailLink.hidden = output.value.length > cfg.form.mail_max;
+    }, 10000);
   });
 
   /* Back from FormSubmit: show the sent state with the letter as receipt. */
