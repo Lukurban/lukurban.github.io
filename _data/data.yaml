@@ -153,7 +153,7 @@ form:
   name_placeholder: Vor- und Nachname
   hint: "* Pflichtfelder. Die Anfrage wird direkt an Lukas Urbanek gesendet – eine Kopie geht automatisch an Ihre E-Mail-Adresse. Auf dieser Website wird nichts gespeichert."
   submit: Anfrage senden
-  endpoint: https://formsubmit.co/ajax/lukas.urbanek@transportundgarten.de
+  endpoint: https://formsubmit.co/lukas.urbanek@transportundgarten.de
   sending: Wird gesendet …
   options:
     - Entrümpelung / Wohnungsauflösung

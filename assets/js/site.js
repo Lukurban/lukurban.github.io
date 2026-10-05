@@ -47,6 +47,7 @@
   const output = $('#request-text');
   const mailLink = $('#mail-request');
   const submitBtn = $('.submit-btn', form);
+  const SENT_PARAM = 'gesendet';
   const resultTexts = {
     eyebrow: $('#result-eyebrow'),
     title: $('#result-title'),
@@ -195,7 +196,7 @@
 
   form.addEventListener('input', () => { result.hidden = true; });
   form.addEventListener('change', () => { result.hidden = true; });
-  form.addEventListener('submit', async (e) => {
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!form.reportValidity()) return;
     if (!service.value) {
@@ -248,14 +249,18 @@
       .replace('{place}', place.value.trim());
 
     /* Static hosting has no backend, so the request is relayed through
-       FormSubmit: one HTTPS request with UTF-8 JSON, so umlauts survive any
-       mail client. The owner receives the request directly and the visitor
-       is put in CC. The field named "email" makes FormSubmit set Reply-To. */
+       FormSubmit. A regular top-level form POST, not fetch: FormSubmit sits
+       behind a Cloudflare challenge that answers cross-origin AJAX calls
+       (and their CORS preflight) with a 403, so fetch never reached it and
+       no request or activation mail was ever sent. A navigation passes the
+       challenge in the visitor's browser. FormSubmit mails the owner, puts
+       the visitor in CC, sets Reply-To from the "email" field and returns
+       to _next, where the sent state is restored from sessionStorage. */
     const payload = {
       _subject: subject,
       _template: 'table',
       _captcha: 'false',
-      _honey: '',
+      _next: location.origin + location.pathname + '?' + SENT_PARAM + '#kontakt',
       _cc: email,
       Leistung: service.value,
       Einsatzort: place.value.trim(),
@@ -266,37 +271,37 @@
       Nachricht: output.value,
     };
 
+    const relay = document.createElement('form');
+    relay.method = 'POST';
+    relay.action = cfg.form.endpoint;
+    relay.acceptCharset = 'UTF-8';
+    relay.hidden = true;
+    Object.entries({ ...payload, _honey: '' }).forEach(([key, value]) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = key;
+      input.value = value;
+      relay.appendChild(input);
+    });
+    document.body.appendChild(relay);
+    try { sessionStorage.setItem(SENT_PARAM, output.value); } catch (err) { /* private mode */ }
     submitBtn.disabled = true;
-    const label = submitBtn.innerHTML;
     submitBtn.innerHTML = '<span>' + cfg.form.sending + '</span>';
-    try {
-      const res = await fetch(cfg.form.endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok || String(data.success).toLowerCase() !== 'true') {
-        throw new Error(data.message || 'HTTP ' + res.status);
-      }
-      mailLink.hidden = true;
-      toast(cfg.form.sent_toast);
-      showResult(true);
-    } catch (err) {
-      /* Fallback: hand the letter to the visitor's own mail client instead.
-         Longer texts are left to the copy/save buttons – mail clients
-         truncate very long bodies silently. */
-      mailLink.href = 'mailto:' + cfg.contact.email
-        + '?subject=' + encodeURIComponent(subject)
-        + '&body=' + encodeURIComponent(output.value);
-      mailLink.hidden = output.value.length > cfg.form.mail_max;
-      toast(cfg.form.failed_toast);
-      showResult(false);
-    } finally {
-      submitBtn.disabled = false;
-      submitBtn.innerHTML = label;
-    }
+    relay.submit();
   });
+
+  /* Back from FormSubmit: show the sent state with the letter as receipt. */
+  if (new URLSearchParams(location.search).has(SENT_PARAM)) {
+    let letter = '';
+    try {
+      letter = sessionStorage.getItem(SENT_PARAM) || '';
+      sessionStorage.removeItem(SENT_PARAM);
+    } catch (err) { /* private mode */ }
+    history.replaceState(null, '', location.pathname + '#kontakt');
+    output.value = letter;
+    toast(cfg.form.sent_toast);
+    showResult(true);
+  }
 
   $('#copy-request').addEventListener('click', async () => {
     let copied = false;
