@@ -175,6 +175,21 @@ form:
   mail_subject: "Projektanfrage {service} – {place}"
   mail_too_long: Zu lang für den E-Mail-Entwurf. Bitte den Text kopieren und selbst einfügen.
   mail_max: 1800
+  # Anfragen-Postfach: URL der Apps-Script-Web-App (siehe POSTFACH-SETUP.md).
+  # Leer = bisheriger mailto-Ablauf. Gefüllt = Anfragen gehen ohne E-Mail-Programm
+  # direkt in die Google-Tabelle des Betreibers (inkl. Benachrichtigungs-Mail).
+  inbox_url: ""
+  inbox_timeout: 12000
+  inbox_hint: "* Pflichtfelder. Mit dem Senden geht Ihre Anfrage direkt an Lukas Urbanek – er erhält sie in seinem Anfragen-Postfach und meldet sich bei Ihnen. Es öffnet sich kein E-Mail-Programm."
+  inbox_sent_eyebrow: ANFRAGE GESENDET
+  inbox_sent_title: Danke, Ihre Anfrage ist angekommen!
+  inbox_sent_text_before: "Ihre Anfrage ist bei Lukas eingegangen – "
+  inbox_sent_text_strong: er meldet sich so schnell wie möglich bei Ihnen.
+  inbox_sent_text_after: " Den Anfragetext unten können Sie als Beleg kopieren oder speichern."
+  inbox_sent_toast: Anfrage gesendet – vielen Dank!
+  inbox_sending: "Anfrage wird gesendet …"
+  inbox_fallback_toast: "Postfach nicht erreichbar – E-Mail-Entwurf wird geöffnet."
+  hp_label: Firma
   copy: Text kopieren
   open_myhammer: MyHammer öffnen
   save: Als Textdatei speichern
@@ -211,10 +226,11 @@ legal:
     eyebrow: HINWEIS
     title: Datenschutz
     paragraphs:
-      - Diese Website lädt keine externen Schriften, Bilder, Analyse- oder Kartendienste. Die Formularangaben werden ausschließlich zum Versand Ihrer Anfrage genutzt und auf dieser Website nicht dauerhaft gespeichert.
-      - Beim Absenden wird in Ihrem eigenen E-Mail-Programm eine vorbereitete E-Mail an die Adresse des Betreibers erstellt; den Versand lösen Sie selbst aus und sehen vorher alle Angaben. Die Daten werden dabei nicht an Dritte übermittelt und auf dieser Website nicht gespeichert. Der Anfragetext kann zusätzlich in die Zwischenablage kopiert oder als lokale Datei gespeichert werden.
+      - Diese Website lädt keine externen Schriften, Bilder, Analyse- oder Kartendienste. Die Formularangaben werden ausschließlich zur Bearbeitung Ihrer Anfrage genutzt und auf dieser Website nicht gespeichert.
       - Externe MyHammer-Links verlassen diese Website.
       - Eine vollständige Datenschutzerklärung wird ergänzt, sobald Hosting und Kontaktwege final feststehen.
+    transport_mailto: "Beim Absenden wird in Ihrem eigenen E-Mail-Programm eine vorbereitete E-Mail an die Adresse des Betreibers erstellt; den Versand lösen Sie selbst aus und sehen vorher alle Angaben. Die Daten werden dabei nicht an Dritte übermittelt und auf dieser Website nicht gespeichert. Der Anfragetext kann zusätzlich in die Zwischenablage kopiert oder als lokale Datei gespeichert werden."
+    transport_inbox: "Beim Absenden wird Ihre Anfrage verschlüsselt (HTTPS) an das Anfragen-Postfach des Betreibers übermittelt – eine Google-Tabelle in seinem eigenen Google-Konto – und dort zur Bearbeitung gespeichert; der Betreiber erhält zusätzlich eine E-Mail-Benachrichtigung. Der Anfragetext kann zusätzlich in die Zwischenablage kopiert oder als lokale Datei gespeichert werden."
 
 footer:
   owner_line: Lukas Urbanek

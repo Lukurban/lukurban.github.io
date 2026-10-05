@@ -3428,3 +3428,15 @@ textarea:focus {
   --bg: var(--theme-bg, #211d1e);
   --ink: var(--theme-text, #f5f2ee);
 }
+
+/* Honeypot field for spam bots: kept in the DOM but parked off-screen,
+   since display:none fields are widely skipped by bot form-fillers. */
+.hp-field {
+  position: absolute;
+  left: -200vw;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}

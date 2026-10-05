@@ -199,7 +199,10 @@
                 <input name="name" id="request-name" required maxlength="100" autocomplete="name" placeholder="{{ d.form.name_placeholder }}">
               </label>
             </div>
-            <p class="form-hint">{{ d.form.hint }}</p>
+            <div class="hp-field" aria-hidden="true">
+              <label>{{ d.form.hp_label }}<input id="request-company" name="company" type="text" tabindex="-1" autocomplete="off"></label>
+            </div>
+            {% if d.form.inbox_url != "" %}<p class="form-hint">{{ d.form.inbox_hint }}</p>{% else %}<p class="form-hint">{{ d.form.hint }}</p>{% endif %}
             <button class="btn submit-btn" type="submit">{{ d.form.submit }} {% include icon.html name="arrow-right" %}</button>
           </form>
           <section id="request-result" class="request-result" aria-live="polite" tabindex="-1" hidden>
@@ -259,6 +262,7 @@
     <span class="eyebrow">{{ d.legal.datenschutz.eyebrow }}</span>
     <h2>{{ d.legal.datenschutz.title }}</h2>
     {% for p in d.legal.datenschutz.paragraphs %}<p>{{ p }}</p>{% endfor %}
+    {% if d.form.inbox_url != "" %}<p>{{ d.legal.datenschutz.transport_inbox }}</p>{% else %}<p>{{ d.legal.datenschutz.transport_mailto }}</p>{% endif %}
   </template>
   <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
 

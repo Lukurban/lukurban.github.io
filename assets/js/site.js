@@ -46,6 +46,9 @@
   const result = $('#request-result');
   const output = $('#request-text');
   const mailLink = $('#mail-request');
+  const submitBtn = $('.submit-btn', form);
+  const hpField = $('#request-company');
+  const inboxUrl = String(cfg.form.inbox_url || '').trim();
   const resultTexts = {
     eyebrow: $('#result-eyebrow'),
     title: $('#result-title'),
@@ -61,6 +64,22 @@
     resultTexts.strong.textContent = sent ? cfg.form.sent_text_strong : cfg.form.failed_text_strong;
     resultTexts.after.textContent = sent ? cfg.form.sent_text_after : cfg.form.failed_text_after;
     mailLink.hidden = false;
+    result.hidden = false;
+    result.focus({ preventScroll: true });
+    result.scrollIntoView({
+      behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+      block: 'center',
+    });
+  }
+
+  function showInboxResult() {
+    result.classList.remove('is-error');
+    resultTexts.eyebrow.textContent = cfg.form.inbox_sent_eyebrow;
+    resultTexts.title.textContent = cfg.form.inbox_sent_title;
+    resultTexts.before.textContent = cfg.form.inbox_sent_text_before;
+    resultTexts.strong.textContent = cfg.form.inbox_sent_text_strong;
+    resultTexts.after.textContent = cfg.form.inbox_sent_text_after;
+    mailLink.hidden = true;
     result.hidden = false;
     result.focus({ preventScroll: true });
     result.scrollIntoView({
@@ -194,7 +213,7 @@
 
   form.addEventListener('input', () => { result.hidden = true; });
   form.addEventListener('change', () => { result.hidden = true; });
-  form.addEventListener('submit', (e) => {
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!form.reportValidity()) return;
     if (!service.value) {
@@ -246,17 +265,62 @@
       .replace('{service}', service.value)
       .replace('{place}', place.value.trim());
 
-    /* Static hosting has no backend, and form relays are a dead end here:
-       their sign-up/activation mails never reached the owner's inbox. The
-       finished letter is therefore handed to the visitor's own mail client
-       via mailto: — delivery rides on the visitor's mail provider, no third
-       party involved. encodeURIComponent percent-encodes as UTF-8, which
-       every current mail program decodes, so umlauts and ß survive. */
-    const mailto = 'mailto:' + cfg.contact.email
-      + '?subject=' + encodeURIComponent(subject)
-      + '&body=' + encodeURIComponent(output.value);
-    mailLink.href = mailto;
+    if (!inboxUrl) {
+      finishViaMailClient(subject);
+      return;
+    }
 
+    /* Honeypot: humans never see the field (CSS parks it off-screen), so a
+       filled one marks a bot — feign success and drop the request. */
+    if (hpField && hpField.value) {
+      showInboxResult();
+      toast(cfg.form.inbox_sent_toast);
+      return;
+    }
+
+    /* Apps Script answers through a redirect that no-cors keeps opaque, so
+       success is assumed whenever the request completes inside the timeout;
+       any network failure falls back to the mail client. */
+    const payload = {
+      service: service.value,
+      place: place.value.trim(),
+      project: project.value.trim(),
+      email: email,
+      phone: phone,
+      name: name,
+      company: hpField ? hpField.value : '',
+      page: location.href,
+    };
+    const ctrl = new AbortController();
+    const timer = setTimeout(() => ctrl.abort(), Number(cfg.form.inbox_timeout) || 12000);
+    submitBtn.disabled = true;
+    toast(cfg.form.inbox_sending);
+    try {
+      await fetch(inboxUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
+        body: new URLSearchParams(payload).toString(),
+        signal: ctrl.signal,
+      });
+      showInboxResult();
+      toast(cfg.form.inbox_sent_toast);
+    } catch (err) {
+      finishViaMailClient(subject, cfg.form.inbox_fallback_toast);
+    } finally {
+      clearTimeout(timer);
+      submitBtn.disabled = false;
+    }
+  });
+
+  /* Static hosting has no backend, and form relays are a dead end here:
+     their sign-up/activation mails never reached the owner's inbox. The
+     finished letter is therefore handed to the visitor's own mail client
+     via mailto: — delivery rides on the visitor's mail provider, no third
+     party involved. encodeURIComponent percent-encodes as UTF-8, which
+     every current mail program decodes, so umlauts and ß survive. Also
+     serves as the fallback when the inbox POST fails. */
+  function finishViaMailClient(subject, note) {
     /* Overlong mailto: URLs get truncated by some mail clients; for those,
        copy/save in the result panel are the way out. */
     if (output.value.length > cfg.form.mail_max) {
@@ -265,18 +329,21 @@
       mailLink.hidden = true;
       return;
     }
-
+    const mailto = 'mailto:' + cfg.contact.email
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(output.value);
+    mailLink.href = mailto;
     showResult(true);
-    toast(cfg.form.sent_toast);
-    /* Hand off through an anchor click inside the submit event, like a real
-       link — protocol handlers ignore navigations started elsewhere. The
-       page stays open, so the receipt panel remains visible. */
+    toast(note || cfg.form.sent_toast);
+    /* Hand off through an anchor click, like a real link — protocol handlers
+       ignore navigations started elsewhere. The page stays open, so the
+       receipt panel remains visible. */
     const opener = document.createElement('a');
     opener.href = mailto;
     document.body.appendChild(opener);
     opener.click();
     opener.remove();
-  });
+  }
 
   $('#copy-request').addEventListener('click', async () => {
     let copied = false;
