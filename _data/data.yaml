@@ -97,10 +97,10 @@ area:
   id: gebiet
   eyebrow: 02 / EINSATZGEBIET
   title:
-    - HIER ZU HAUSE.
-  title_accent: |-
-    FÜR SIE
-    UNTERWEGS.
+   - Berlin.
+  title_accent: 
+   - Cottbus.
+   - Dresden.
   text: Um diese Achse herum erstreckt sich mein Einsatzgebiet. In Forst bei Cottbus ansässig fahre ich über Südbrandenburg bis nach Berlin und über Nordsachsen bis nach Dresden. Egal ob Eisenhüttenstadt, Bad Saarow oder Spremberg, hier bin ich zu Hause, hier möchte ich was bewegen.
   image: /l4u-van-garden.jpg
   image_aria: Der L4U Transporter steht auf einer Wiese vor Bäumen.
