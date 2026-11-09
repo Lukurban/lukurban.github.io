@@ -8,21 +8,36 @@
   <title>L4U · Lukas Urbanek</title>
   <meta name="description" content="Entrümpelung, Transport und Gartenpflege in der Region Cottbus.">
   <link rel="stylesheet" href="/assets/css/site.css">
-  <style>
-    .hero-utility {
+   <style>
+    .utility {
+      --theme-accent: #ed702f;
+      --theme-accent-hover: #fa874b;
+      --theme-bg: #172331;
+      --theme-panel: #101a27;
+      --theme-deep: #09111b;
+      --theme-text: #f5f3ef;
+      --theme-muted: #c3ccd5;
+      --theme-soft: #ed702f24;    
+    }
+     .hero-utility {
         position: relative;
-        width: 100%;
-        height: 500px;
+        overflow: hidden;
     }
     .slider-container {
         position: absolute;
-        top: 0; left: 0; width: 100%; height: 100%; z-index: 1;
+        top: 0; 
+        left: 0; 
+        width: 100%; 
+        height: 100%; 
+        z-index: 1;
     }
     .slide {
         display: none;
-        width: 100%; height: 100%; object-fit: cover;
+        width: 100%; 
+        height: 100%; 
+        object-fit: cover;
     }
-    .hero-content {
+    .hero-utility .wrap {
         position: relative;
         z-index: 2;
     }
@@ -31,7 +46,8 @@
 <body class="utility">
   <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
   <header class="site-header">
-
+    
+    <!-- HIER STARTET DER AUTOMATISCHE SLIDER IM HINTERGRUND -->
     <div class="slider-container" style="position: absolute; top:0; left:0; width:100%; height:100%; z-index: 1;">
         <img class="slide" src="l4u-hero-lukas-van-bild-1.jpg" alt="1. Startbild" style="display:none; width:100%; height:100%; object-fit:cover;">
         <img class="slide" src="l4u-hero-lukas-van-bild-2.jpg" alt="2. Bild" style="display:none; width:100%; height:100%; object-fit:cover;">
@@ -54,6 +70,7 @@
 
   <main id="inhalt">
     <section class="hero-utility">
+      
       <div class="wrap">
         <div class="utility-topline"><span>Einer für die schweren Sachen, verlässlich und effizient.</span><span>Berlin – Cottbus – Dresden</span></div>
         <div class="utility-hero-grid">
@@ -148,8 +165,7 @@
       <div class="wrap">
         <div class="scope-copy">
           <span class="eyebrow">02 / EINSATZGEBIET</span>
-          <h2>HIER ZU HAUSE.<br><span>FÜR SIE<br />
-UNTERWEGS.</span></h2>
+          <h2>HIER ZU HAUSE.<br><span>FÜR SIE<br />UNTERWEGS.</span></h2>
           <p>Um diese Achse herum erstreckt sich mein Einsatzgebiet. In Forst bei Cottbus ansässig fahre ich über Südbrandenburg bis nach Berlin und über Nordsachsen bis nach Dresden. Egal ob Eisenhüttenstadt, Bad Saarow oder Spremberg, hier bin ich zu Hause, hier möchte ich was bewegen.</p>
           <div class="region-pills" aria-label="Einsatzgebiet">
             
