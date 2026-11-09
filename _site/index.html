@@ -18,13 +18,21 @@
       --theme-text: #f5f3ef;
       --theme-muted: #c3ccd5;
       --theme-soft: #ed702f24;
-      --hero-image: url('/l4u-hero-lukas-van.jpg');
+      /* --hero-image: url('/l4u-hero-lukas-van.jpg'); */
     }
   </style>
 </head>
 <body class="utility">
   <a class="skip-link" href="#inhalt">Zum Inhalt springen</a>
   <header class="site-header">
+
+    <div class="slider-container" style="position: absolute; top:0; left:0; width:100%; height:100%; z-index: 1;">
+        <img class="slide" src="l4u-hero-lukas-van-bild-1.jpg" alt="1. Startbild" style="display:none; width:100%; height:100%; object-fit:cover;">
+        <img class="slide" src="l4u-hero-lukas-van-bild-2.jpg" alt="2. Bild" style="display:none; width:100%; height:100%; object-fit:cover;">
+        <img class="slide" src="l4u-hero-lukas-van-bild-3.jpg" alt="3. Bild" style="display:none; width:100%; height:100%; object-fit:cover;">
+        <img class="slide" src="l4u-hero-lukas-van-bild-4.jpg" alt="3. Bild" style="display:none; width:100%; height:100%; object-fit:cover;">
+    </div>
+    
     <div class="wrap header-inner">
       <a class="logo" href="#inhalt" aria-label="L4U – Lukas Urbanek, Transport und Garten, Startseite"><span class="wordmark">L4U<span class="brand-dot"></span></span><span class="logo-copy"><span class="logo-text">Lukas Urbanek</span><span class="logo-tagline">Transport & Garten</span></span></a>
       <nav class="navlinks" aria-label="Hauptnavigation">
@@ -311,5 +319,35 @@ UNTERWEGS.</span></h2>
     }
   </script>
   <script src="/assets/js/site.js"></script>
+
+  <script>
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            let slides = document.getElementsByClassName("slide");
+            if (slides.length === 0) return;
+            
+            // Alle Bilder unsichtbar machen
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            
+            slideIndex++;
+            // Wenn das letzte Bild erreicht ist, wieder von vorne anfangen
+            if (slideIndex > slides.length) {
+                slideIndex = 1;
+            }    
+            
+            // Aktuelles Bild anzeigen
+            if (slides[slideIndex - 1]) {
+                slides[slideIndex - 1].style.display = "block";  
+            }
+            
+            // Wechselt alle 3 Sekunden (3000 Millisekunden)
+            setTimeout(showSlides, 3000); 
+        }
+  </script>
+
 </body>
 </html>
