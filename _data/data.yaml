@@ -61,6 +61,15 @@ hero:
   text: L4U ist Ihr direkter Ansprechpartner, wenn es darum geht, zuverlässig, schnell und zielorientiert Ihre Projekte umzusetzen und Aufgaben zu lösen.
   cta: LOS GEHT’S
   image: /l4u-hero-lukas-van.jpg
+  images:
+    - /l4u-hero-lukas-van.jpg
+    - /l4u-hero-lukas-van-bild-2.jpg
+    - /l4u-hero-lukas-van-bild-3.jpg
+    - /l4u-hero-lukas-van-bild-4.jpg
+    - /l4u-hero-lukas-van-bild-5.jpg
+    - /l4u-hero-lukas-van-bild-6.jpg
+    - /l4u-hero-lukas-van-bild-7.jpg
+    - /l4u-hero-lukas-van-bild-8.jpg
 
 ribbon:
   - Wohnungsauflösung

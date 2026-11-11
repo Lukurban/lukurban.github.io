@@ -268,6 +268,7 @@
 
   <script type="application/json" id="site-runtime">
     {
+      "hero_images": [{% for image in d.hero.images %}{{ image | relative_url | jsonify }}{% unless forloop.last %}, {% endunless %}{% endfor %}],
       "header": {
         "menu_open": {{ d.header.menu_open | jsonify }},
         "menu_close": {{ d.header.menu_close | jsonify }}
