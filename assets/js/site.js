@@ -4,6 +4,23 @@
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
   const cfg = JSON.parse($('#site-runtime').textContent);
 
+  const hero = $('.utility-hero-art');
+  const heroImages = (cfg.hero_images || []).map((src) => {
+    const image = new Image();
+    image.src = src;
+    return image;
+  });
+  let heroIndex = 0;
+  if (hero && heroImages.length > 1) {
+    setInterval(() => {
+      heroIndex = (heroIndex + 1) % heroImages.length;
+      const image = heroImages[heroIndex];
+      if (image.complete && image.naturalWidth > 0) {
+        hero.style.setProperty('--hero-image', `url("${image.src}")`);
+      }
+    }, 5000);
+  }
+
   let toastTimer;
   function toast(message) {
     const t = $('#toast');
