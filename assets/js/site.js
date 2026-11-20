@@ -18,7 +18,7 @@
       if (image.complete && image.naturalWidth > 0) {
         hero.style.setProperty('--hero-image', `url("${image.src}")`);
       }
-    }, 5000);
+    }, 2000);
   }
 
   let toastTimer;
